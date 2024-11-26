@@ -5,6 +5,9 @@
 
 class Engine
 {
+public:
+	void createWindow();
+	void render();
 
 };
 

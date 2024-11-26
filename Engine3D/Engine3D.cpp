@@ -1,6 +1,8 @@
 //#include <gl\gl.h>
 #include "Engine.h"
 
+Engine engine;
+
 // Drawing function:
 void OnDraw() {
     // Background colour (R, G, B, Alpha):
@@ -12,15 +14,12 @@ void OnDraw() {
 }
 
 int main(int argc, char* argv[]) {
-    glutInit(&argc, argv);
+       
+    engine.createWindow();
 
-    // Preparing the window:
-    glutInitDisplayMode(GLUT_RGB);
-    glutInitWindowSize(800, 600);
-    glutCreateWindow("Hello OpenGL");
 
     // Drawing callback function:
-    glutDisplayFunc(OnDraw);
+    glutDisplayFunc(engine.render);
 
     glutMainLoop();
     return 0;
