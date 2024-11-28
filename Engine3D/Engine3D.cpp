@@ -1,26 +1,19 @@
-//#include <gl\gl.h>
 #include "Engine.h"
 
-Engine engine;
+int main() {
+    // Konfiguracja silnika
+    Engine engine(800, 600, "Silnik3D", false);
 
-// Drawing function:
-void OnDraw() {
-    // Background colour (R, G, B, Alpha):
-    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-    // Clearing the colour buffer:
-    glClear(GL_COLOR_BUFFER_BIT);
-    // Flushing the rendering queue:
-    glFinish();	// or glFlush();
-}
+    // Parametryzacja
+    engine.setGraphicsMode(false, 800, 600); // Tryb okienkowy 800x600
+    engine.setFrameRate(60);                 // 60 klatek na sekundê
+    engine.enableMouseInput(true);           // W³¹cz obs³ugê myszy
+    engine.enableKeyboardInput(true);        // W³¹cz obs³ugê klawiatury
+    engine.enableDepthBuffer(true);          // W³¹cz bufor g³êbi
+    engine.setClearColor(0.0f, 0.0f, 1.0f, 1.0f); // Kolor t³a: niebieski
 
-int main(int argc, char* argv[]) {
-       
-    engine.createWindow();
+    // Uruchomienie silnika
+    engine.start();
 
-
-    // Drawing callback function:
-    glutDisplayFunc(engine.render);
-
-    glutMainLoop();
     return 0;
 }
