@@ -30,6 +30,10 @@ private:
     float clearColor[4];
     bool isRunning;
 
+    // Dodano enum dla trybów rzutowania
+    enum class ProjectionMode { PERSPECTIVE, ORTHOGRAPHIC };
+    ProjectionMode currentProjectionMode;
+
     static void displayCallback();
     static void reshapeCallback(int width, int height);
     static void keyboardCallback(unsigned char key, int x, int y);
@@ -38,9 +42,8 @@ private:
 
     void initGraphics();
     void deinitGraphics();
-    
 
     static Engine* instance;
 };
 
-#endif 
+#endif
