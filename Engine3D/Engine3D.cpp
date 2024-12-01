@@ -12,8 +12,12 @@ int main() {
     engine.enableDepthBuffer(true);          // W³¹cz bufor g³êbi
     engine.setClearColor(0.0f, 0.0f, 1.0f, 1.0f); // Kolor t³a: niebieski
 
+
+
     // Uruchomienie silnika
     engine.start();
+
+
 
     return 0;
 }

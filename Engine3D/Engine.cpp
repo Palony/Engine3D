@@ -3,6 +3,8 @@
 
 Engine* Engine::instance = nullptr;
 
+
+
 Engine::Engine(int width, int height, const std::string& title, bool fullscreen)
     : windowWidth(width), windowHeight(height), windowTitle(title), isFullscreen(fullscreen),
     frameRate(60), mouseEnabled(false), keyboardEnabled(false), depthBufferEnabled(false), isRunning(false),
@@ -143,7 +145,28 @@ void Engine::displayCallback() {
     glColor3f(0.0f, 0.0f, 1.0f);
     glVertex3f(0.0f, 0.0f, -2.0f);
     glVertex3f(0.0f, 0.0f, 2.0f);
+
+
+
     glEnd();
+
+    //instance->geometric_Objects.draw_traingle(0.0f, 1.0f, 0.0f, 
+    // 1.0f, -1.0f, 0.0f, 
+    // -1.0f, -1.0f, 0.0f);
+    //instance->geometric_Objects.draw_rectangle(-1.0f, 1.0f, 0.0f, 
+    //    1.0f, 1.0f, 0.0f,   
+    //    1.0f, -1.0f, 0.0f,   
+    //    -1.0f, -1.0f, 0.0f); 
+
+    // Wywo³anie funkcji rysuj¹cej kulê
+    
+
+    //rysuje kule
+    //instance->geometric_Objects.draw_sphere(1.0, 16, 16);
+
+
+    //rysuje szeœcian
+    instance->geometric_Objects.draw_Cube(2);
 
     glutSwapBuffers();
 }

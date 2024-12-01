@@ -3,6 +3,7 @@
 
 #include <GL/freeglut.h>
 #include <string>
+#include "Geometric_Objects.h"
 
 class Engine {
 public:
@@ -18,6 +19,9 @@ public:
 
     void start();
     void stop();
+
+    Geometric_Objects geometric_Objects;
+
 
 private:
     int windowWidth, windowHeight;
