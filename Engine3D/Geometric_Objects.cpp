@@ -1,27 +1,53 @@
 #include "Geometric_Objects.h"
 
 
-void Geometric_Objects::draw_traingle(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3)
+void Geometric_Objects::draw_line(const float LineVerts[], const float LineColours[])
 {
-    // Rysowanie trójk¹ta
-    glBegin(GL_TRIANGLES);
-    glColor3f(1.0f, 1.0f, 1.0f); // Ustawienie koloru trójk¹ta
-    glVertex3f(x1, y1, z1);  // Wierzcho³ek górny
-    glVertex3f(x2, y2, z2); // Wierzcho³ek dolny prawy
-    glVertex3f(x3, y3, z3); // Wierzcho³ek dolny lewy
-    glEnd();
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, LineVerts);
+
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, LineColours);
+
+    glDrawArrays(GL_LINES,0,2);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void Geometric_Objects::draw_rectangle(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3, GLfloat x4, GLfloat y4, GLfloat z4)
+
+
+void Geometric_Objects::draw_triangle(const float LineVerts[], const float LineColours[])
 {
-    glBegin(GL_QUADS);
-    glColor3f(1.0f, 1.0f, 1.0f); // Ustawienie koloru trójk¹ta
-    glVertex3f(x1, y1, z1);  // Wierzcho³ek lewy górny
-    glVertex3f(x2, y2, z2); // Wierzcho³ek prawny górny
-    glVertex3f(x3, y3, z3); // Wierzcho³ek dolny lewy
-    glVertex3f(x4, y4, z4); // Wierzcho³ek prawy lewy
-    glEnd();
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, LineVerts);
+
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, LineColours);
+
+    glDrawArrays(GL_TRIANGLES,0,6);
+
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
 }
+
+void Geometric_Objects::draw_rectangle(const float LineVerts[], const float LineColours[])
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, LineVerts);
+
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, LineColours);
+
+    glDrawArrays(GL_QUADS, 0, 6);
+
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+}
+
+
 
 void Geometric_Objects::draw_sphere(double dRadius, GLint slices, GLint stacks)
 {

@@ -150,9 +150,6 @@ void Engine::displayCallback() {
 
     glEnd();
 
-    //instance->geometric_Objects.draw_traingle(0.0f, 1.0f, 0.0f, 
-    // 1.0f, -1.0f, 0.0f, 
-    // -1.0f, -1.0f, 0.0f);
     //instance->geometric_Objects.draw_rectangle(-1.0f, 1.0f, 0.0f, 
     //    1.0f, 1.0f, 0.0f,   
     //    1.0f, -1.0f, 0.0f,   
@@ -166,7 +163,68 @@ void Engine::displayCallback() {
 
 
     //rysuje szeœcian
-    instance->geometric_Objects.draw_Cube(2);
+    //instance->geometric_Objects.draw_Cube(2);
+
+
+    //Rysowanie lini
+
+
+    //Wektor Wierzcholkow
+    const float LineVerts[] = {
+        -1.0f,-1.f,0.2f,
+        -1.0f,1.0f,0.2f
+    };
+
+
+    //Wektor kolorow
+    const float LineColours[] = {
+        1.0f, 1.0f, 0.3f,
+        1.0f, 0.9f, 0.0f,
+    };
+
+    instance->geometric_Objects.draw_line(LineVerts, LineColours);
+
+
+    //Rysowanie trojkata
+
+
+    /*
+    const float LineVerts_triangle[] = {
+        0.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f, 
+        -1.0f, -1.0f, 0.0f
+    };
+
+    const float LineColours_triangle[] = {
+        1.0f, 1.0f, 0.3f,
+        1.0f, 0.9f, 0.0f,
+        1.0f, 1.0f, 1.0f
+    };
+
+    instance->geometric_Objects.draw_triangle(LineVerts_triangle, LineColours_triangle);
+
+    */
+    //Rysowanie Czworokata
+
+
+    const float LineVerts_rectangle[] = {
+        -1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,   
+        1.0f, -1.0f, 0.0f,   
+        -1.0f, -1.0f, 0.0f
+    };
+
+    const float LineColours_rectangle[] = {
+        0.2f, 1.0f, 0.3f,
+        1.0f, 0.9f, 0.0f,
+        1.0f, 1.5f, 1.0f,
+        1.0f, 1.0f, 0.5f
+    };
+
+
+
+    instance->geometric_Objects.draw_rectangle(LineVerts_rectangle, LineColours_rectangle);
+
 
     glutSwapBuffers();
 }
