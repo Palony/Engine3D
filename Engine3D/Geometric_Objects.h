@@ -5,8 +5,12 @@ class Geometric_Objects
 {
 public:
 
+	void draw_points(const float PointVerts[], const float PointColours[], int numPoints);
+	void draw_polyline(const float PolylineVerts[], const float PolylineColours[], int numPoints);  
 	void draw_line(const float LineVerts[], const float LineColours[]);
 	void draw_triangle(const float LineVerts[], const float LineColours[]);
+	void draw_triangle_strip(const float Verts[], const float Colours[], int numPoints);
+	void draw_triangle_fan(const float Verts[], const float Colours[], int numPoints);
 	void draw_rectangle(const float LineVerts[], const float LineColours[]);
 	void draw_sphere(double dRadius, GLint slices, GLint stacks); //Rysuje kule
 	void draw_Cube(double dSize); // Rysuje szeœcian

@@ -1,5 +1,19 @@
 #include "Geometric_Objects.h"
 
+void Geometric_Objects::draw_points(const float PointVerts[], const float PointColours[], int numPoints)
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, PointVerts);
+
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, PointColours);
+
+    glDrawArrays(GL_POINTS, 0, numPoints);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+}
+
 
 void Geometric_Objects::draw_line(const float LineVerts[], const float LineColours[])
 {
@@ -15,7 +29,19 @@ void Geometric_Objects::draw_line(const float LineVerts[], const float LineColou
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
+void Geometric_Objects::draw_polyline(const float Verts[], const float Colours[], int numPoints)
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, Verts);
 
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, Colours);
+
+    glDrawArrays(GL_LINE_STRIP, 0, numPoints);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+}
 
 void Geometric_Objects::draw_triangle(const float LineVerts[], const float LineColours[])
 {
@@ -31,6 +57,34 @@ void Geometric_Objects::draw_triangle(const float LineVerts[], const float LineC
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 }
+
+void Geometric_Objects::draw_triangle_strip(const float Verts[], const float Colours[], int numPoints)
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, Verts);
+
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, Colours);
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, numPoints);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+}
+void Geometric_Objects::draw_triangle_fan(const float Verts[], const float Colours[], int numPoints)
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, Verts);
+
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, Colours);
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, numPoints);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+}
+
 
 void Geometric_Objects::draw_rectangle(const float LineVerts[], const float LineColours[])
 {

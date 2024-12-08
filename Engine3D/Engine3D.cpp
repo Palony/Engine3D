@@ -10,7 +10,7 @@ int main() {
     engine.enableMouseInput(true);           // W³¹cz obs³ugê myszy
     engine.enableKeyboardInput(true);        // W³¹cz obs³ugê klawiatury
     engine.enableDepthBuffer(true);          // W³¹cz bufor g³êbi
-    engine.setClearColor(0.0f, 0.0f, 1.0f, 1.0f); // Kolor t³a: niebieski
+    engine.setClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Kolor t³a: czarny
 
 
 

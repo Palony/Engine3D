@@ -165,7 +165,23 @@ void Engine::displayCallback() {
     //rysuje szeœcian
     //instance->geometric_Objects.draw_Cube(2);
 
+    // Wektor Wierzcholkow dla punktów
+    const float PointVerts[] = {
+        0.2f, 0.1f, 0.2f, // Punkt 1
+        0.5f, 0.5f, 0.2f, // Punkt 2
+       -0.5f, -0.5f, 0.2f // Punkt 3
+    };
 
+    // Wektor kolorow dla punktów
+    const float PointColours[] = {
+        1.0f, 0.0f, 0.0f, // Kolor punktu 1
+        0.0f, 1.0f, 0.0f, // Kolor punktu 2
+        0.0f, 0.0f, 1.0f  // Kolor punktu 3
+    };
+
+    // Wywo³anie metody rysuj¹cej punkty
+    instance->geometric_Objects.draw_points(PointVerts, PointColours, 3); 
+/*
     //Rysowanie lini
 
 
@@ -183,7 +199,26 @@ void Engine::displayCallback() {
     };
 
     instance->geometric_Objects.draw_line(LineVerts, LineColours);
+    */
+    // rysowanie ³amanych
+    // Wektor Wierzcholkow dla linii ³amanej
+    const float PolylineVerts[] = {
+        -1.0f, -1.0f, 0.2f, // Punkt 1
+        -0.5f,  0.5f, 0.2f, // Punkt 2
+         0.0f, -0.5f, 0.2f, // Punkt 3
+         0.5f,  0.5f, 0.2f  // Punkt 4
+    };
 
+    // Wektor kolorow dla linii ³amanej
+    const float PolylineColours[] = {
+        1.0f, 0.0f, 0.0f, // Czerwony dla Punktu 1
+        0.0f, 1.0f, 0.0f, // Zielony dla Punktu 2
+        0.0f, 0.0f, 1.0f, // Niebieski dla Punktu 3
+        1.0f, 1.0f, 0.0f  // ¯ó³ty dla Punktu 4
+    };
+
+    // Wywo³anie rysowania linii ³amanej
+    instance->geometric_Objects.draw_polyline(PolylineVerts, PolylineColours, 4);
 
     //Rysowanie trojkata
 
@@ -204,8 +239,45 @@ void Engine::displayCallback() {
     instance->geometric_Objects.draw_triangle(LineVerts_triangle, LineColours_triangle);
 
     */
-    //Rysowanie Czworokata
+    /*
+    //rysowanie pasow trojkata
+    const float TriangleStripVerts[] = {
+    -1.0f, -1.0f, 0.0f, // Punkt 1
+     0.0f,  1.0f, 0.0f, // Punkt 2
+     1.0f, -1.0f, 0.0f, // Punkt 3
+     2.0f,  1.0f, 0.0f  // Punkt 4
+    };
 
+    const float TriangleStripColours[] = {
+        1.0f, 0.0f, 0.0f, // Czerwony
+        0.0f, 1.0f, 0.0f, // Zielony
+        0.0f, 0.0f, 1.0f, // Niebieski
+        1.0f, 1.0f, 0.0f  // ¯ó³ty
+    };
+
+    instance->geometric_Objects.draw_triangle_strip(TriangleStripVerts, TriangleStripColours, 4);
+    */
+    //rysowanie wachlarzy trojkata
+    const float TriangleFanVerts[] = {
+    0.0f,  0.0f, 0.0f, // Punkt 1 (wspólny)
+    -1.0f, -1.0f, 0.0f, // Punkt 2
+     1.0f, -1.0f, 0.0f, // Punkt 3
+     1.0f,  1.0f, 0.0f, // Punkt 4
+    -1.0f,  1.0f, 0.0f  // Punkt 5
+    };
+
+    const float TriangleFanColours[] = {
+        1.0f, 1.0f, 1.0f, // Bia³y (dla Punktu 1)
+        1.0f, 0.0f, 0.0f, // Czerwony
+        0.0f, 1.0f, 0.0f, // Zielony
+        0.0f, 0.0f, 1.0f, // Niebieski
+        1.0f, 1.0f, 0.0f  // ¯ó³ty
+    };
+
+    instance->geometric_Objects.draw_triangle_fan(TriangleFanVerts, TriangleFanColours, 5);
+    
+    //Rysowanie Czworokata
+    /*
 
     const float LineVerts_rectangle[] = {
         -1.0f, 1.0f, 0.0f,
@@ -224,7 +296,7 @@ void Engine::displayCallback() {
 
 
     instance->geometric_Objects.draw_rectangle(LineVerts_rectangle, LineColours_rectangle);
-
+    */
 
     glutSwapBuffers();
 }
