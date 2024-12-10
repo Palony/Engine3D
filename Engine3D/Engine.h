@@ -4,11 +4,13 @@
 #include <GL/freeglut.h>
 #include <string>
 #include "Geometric_Objects.h"
+#include "Camera.h"
 
 class Engine {
 public:
     Engine(int width, int height, const std::string& title, bool fullscreen = false);
     ~Engine();
+
 
     void setGraphicsMode(bool fullscreen, int width, int height);
     void setFrameRate(int fps);
@@ -21,9 +23,11 @@ public:
     void stop();
 
     Geometric_Objects geometric_Objects;
-
+    // Wywo³ania funkcji kamery
+    Camera& getCamera(); // Zwraca referencjê do kamery
 
 private:
+    Camera camera;
     int windowWidth, windowHeight;
     std::string windowTitle;
     bool isFullscreen;
@@ -48,6 +52,10 @@ private:
     void deinitGraphics();
 
     static Engine* instance;
+
+   
+
+
 };
 
 #endif

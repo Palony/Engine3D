@@ -1,15 +1,15 @@
 #include "Engine.h"
 #include <iostream>
+#include "Camera.h"
 
 Engine* Engine::instance = nullptr;
-
 
 
 Engine::Engine(int width, int height, const std::string& title, bool fullscreen)
     : windowWidth(width), windowHeight(height), windowTitle(title), isFullscreen(fullscreen),
     frameRate(60), mouseEnabled(false), keyboardEnabled(false), depthBufferEnabled(false), isRunning(false),
-    currentProjectionMode(ProjectionMode::PERSPECTIVE) // Inicjalizacja trybu rzutowania
-{
+    currentProjectionMode(ProjectionMode::PERSPECTIVE){
+
     clearColor[0] = 0.0f; // Red
     clearColor[1] = 0.0f; // Green
     clearColor[2] = 0.0f; // Blue
@@ -22,6 +22,11 @@ Engine::Engine(int width, int height, const std::string& title, bool fullscreen)
         std::cerr << "Wiele instancji Engine nie jest obs³ugiwane." << std::endl;
         exit(EXIT_FAILURE);
     }
+
+}
+
+Camera& Engine::getCamera() {
+    return camera;
 }
 
 Engine::~Engine() {
@@ -58,6 +63,8 @@ void Engine::setClearColor(float r, float g, float b, float a) {
     clearColor[3] = a;
 }
 
+
+
 void Engine::start() {
     isRunning = true;
 
@@ -93,7 +100,7 @@ void Engine::start() {
     if (mouseEnabled) {
         glutMouseFunc(mouseCallback);
     }
-
+  
     // Uruchomienie g³ównej pêtli
     glutTimerFunc(1000 / frameRate, timerCallback, 0);
     glutMainLoop();
@@ -125,6 +132,9 @@ void Engine::displayCallback() {
     glClear(GL_COLOR_BUFFER_BIT | (instance->depthBufferEnabled ? GL_DEPTH_BUFFER_BIT : 0));
 
     glLoadIdentity();
+
+    instance->camera.apply(); // Zastosowanie ustawieñ kamery 
+    
 
     // Dla rzutowania perspektywicznego przesuwamy scenê do ty³u
     if (instance->currentProjectionMode == ProjectionMode::PERSPECTIVE) {
@@ -181,7 +191,7 @@ void Engine::displayCallback() {
 
     // Wywo³anie metody rysuj¹cej punkty
     instance->geometric_Objects.draw_points(PointVerts, PointColours, 3); 
-/*
+
     //Rysowanie lini
 
 
@@ -199,7 +209,8 @@ void Engine::displayCallback() {
     };
 
     instance->geometric_Objects.draw_line(LineVerts, LineColours);
-    */
+    
+    /*
     // rysowanie ³amanych
     // Wektor Wierzcholkow dla linii ³amanej
     const float PolylineVerts[] = {
@@ -219,7 +230,7 @@ void Engine::displayCallback() {
 
     // Wywo³anie rysowania linii ³amanej
     instance->geometric_Objects.draw_polyline(PolylineVerts, PolylineColours, 4);
-
+    */
     //Rysowanie trojkata
 
 
@@ -387,6 +398,8 @@ void Engine::reshapeCallback(int width, int height) {
 
 // Zaktualizowany keyboardCallback do prze³¹czania trybów rzutowania
 void Engine::keyboardCallback(unsigned char key, int x, int y) {
+    float cameraSpeed = 0.1f;
+
     if (key == 27) { // Klawisz ESC
         instance->stop();
     }
@@ -398,6 +411,28 @@ void Engine::keyboardCallback(unsigned char key, int x, int y) {
         instance->currentProjectionMode = ProjectionMode::ORTHOGRAPHIC;
         instance->reshapeCallback(instance->windowWidth, instance->windowHeight);
     }
+    else if (key == 'w') {
+        instance->camera.setPosition(instance->camera.getPosition()[0],
+            instance->camera.getPosition()[1],
+            instance->camera.getPosition()[2] - cameraSpeed);
+    }
+    else if (key == 's') {
+        instance->camera.setPosition(instance->camera.getPosition()[0],
+            instance->camera.getPosition()[1],
+            instance->camera.getPosition()[2] + cameraSpeed);
+    }
+    else if (key == 'a') {
+        instance->camera.setPosition(instance->camera.getPosition()[0] - cameraSpeed,
+            instance->camera.getPosition()[1],
+            instance->camera.getPosition()[2]);
+    }
+    else if (key == 'd') {
+        instance->camera.setPosition(instance->camera.getPosition()[0] + cameraSpeed,
+            instance->camera.getPosition()[1],
+            instance->camera.getPosition()[2]);
+    }
+
+
 }
 
 void Engine::mouseCallback(int button, int state, int x, int y) {
