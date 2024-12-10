@@ -17,6 +17,7 @@ public:
 	void draw_Torus(double dInnerRadius, double dOuterRadius, GLint nSides, GLint nRings); //Rysuje pierœcieñ
 	void draw_Cylinder(double base, double height, GLint slices, GLint stacks); //Rysuje cylinder
 	void draw_Cone(double base, double height, GLint slices, GLint stacks); // Rysuje sto¿ek
+	void draw_Box(const float cube_vert[], const float cube_norm[],const float cube_cols[], const unsigned char cube_ind[]);
 
 };
 

@@ -163,7 +163,7 @@ void Engine::displayCallback() {
 
 
     //rysuje szeœcian
-    //instance->geometric_Objects.draw_Cube(2);
+   // instance->geometric_Objects.draw_Cube(2);
 
     // Wektor Wierzcholkow dla punktów
     const float PointVerts[] = {
@@ -258,6 +258,7 @@ void Engine::displayCallback() {
     instance->geometric_Objects.draw_triangle_strip(TriangleStripVerts, TriangleStripColours, 4);
     */
     //rysowanie wachlarzy trojkata
+    /*
     const float TriangleFanVerts[] = {
     0.0f,  0.0f, 0.0f, // Punkt 1 (wspólny)
     -1.0f, -1.0f, 0.0f, // Punkt 2
@@ -275,7 +276,7 @@ void Engine::displayCallback() {
     };
 
     instance->geometric_Objects.draw_triangle_fan(TriangleFanVerts, TriangleFanColours, 5);
-    
+    */
     //Rysowanie Czworokata
     /*
 
@@ -296,10 +297,69 @@ void Engine::displayCallback() {
 
 
     instance->geometric_Objects.draw_rectangle(LineVerts_rectangle, LineColours_rectangle);
+   
     */
+   
+    //rysowanie szeœcianu
+    const float cube_vert[] = {
+        //wierzcho³ków szeœcianu
+        -1.0f, -1.0f, -1.0f, // 0
+        -1.0f, -1.0f,  1.0f, // 1
+        -1.0f,  1.0f,  1.0f, // 2
+        -1.0f,  1.0f, -1.0f, // 3
+         1.0f,  1.0f,  1.0f, // 4
+         1.0f,  1.0f, -1.0f, // 5
+         1.0f, -1.0f,  1.0f, // 6
+         1.0f, -1.0f, -1.0f  // 7
+    };
 
+    //normalne szeœcianu
+    const float cube_norm[] = {
+        0.0f, 0.0f, 1.0f,  
+        0.0f, 0.0f, 1.0f,  
+        0.0f, 0.0f, 1.0f,  
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f
+    };
+    //kolory wierzcho³ków
+    const float cube_cols[] = {
+        1.0f, 0.0f, 0.0f, 
+        0.0f, 1.0f, 0.0f, 
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 1.0f, 
+        0.0f, 1.0f, 1.0f,
+        0.5f, 0.0f, 0.5f  
+    };
+
+  
+    const unsigned char cube_ind[] = {
+        // przednia œciana, wierzcho³ki 1,2,4,6
+        1,2,4,  1,4,6,
+        // tylna œciana: wierzcho³ki 0,3,5,7
+        0,3,5,  0,5,7,
+        // lewa œciana wierzcho³ki 0,1,2,3
+        0,1,2,  0,2,3,
+        // prawa œciana wierzcho³ki 7,6,4,5
+        7,6,4,  7,4,5,
+        // górna œciana wierzcho³ki 3,2,4,5
+        3,2,4,  3,4,5,
+        // dolna œciana wierzcho³ki 0,7,6,1
+        0,7,6,  0,6,1
+    };
+
+    instance->geometric_Objects.draw_Box(cube_vert, cube_norm, cube_cols, cube_ind);
+    
     glutSwapBuffers();
+
+    
 }
+
+
 
 // Zaktualizowany reshapeCallback do dostosowania macierzy rzutowania
 void Engine::reshapeCallback(int width, int height) {
