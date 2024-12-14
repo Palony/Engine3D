@@ -5,6 +5,7 @@
 #include <string>
 #include "Geometric_Objects.h"
 #include "Camera.h"
+#include "Cube.h"
 
 class Engine {
 public:
@@ -25,6 +26,7 @@ public:
     Geometric_Objects geometric_Objects;
     // Wywo³ania funkcji kamery
     Camera& getCamera(); // Zwraca referencjê do kamery
+    Cube cube;
 
 private:
     Camera camera;

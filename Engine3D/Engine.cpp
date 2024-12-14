@@ -1,8 +1,11 @@
 #include "Engine.h"
 #include <iostream>
 #include "Camera.h"
+#include "Cube.h"
 
 Engine* Engine::instance = nullptr;
+
+
 
 
 Engine::Engine(int width, int height, const std::string& title, bool fullscreen)
@@ -363,7 +366,7 @@ void Engine::displayCallback() {
         0,7,6,  0,6,1
     };
 
-    instance->geometric_Objects.draw_Box(cube_vert, cube_norm, cube_cols, cube_ind);
+    instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind);
     
     glutSwapBuffers();
 

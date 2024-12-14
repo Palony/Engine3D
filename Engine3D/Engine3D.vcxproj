@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Engine3D\glm</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,6 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Engine3D\glm</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,14 +138,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="DrawableObject.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Engine3D.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Geometric_Objects.cpp" />
+    <ClCompile Include="ShapeObject.cpp" />
+    <ClCompile Include="TransformableObject.cpp" />
+    <ClCompile Include="UpdatableObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Geometric_Objects.h" />
+    <ClInclude Include="ShapeObject.h" />
+    <ClInclude Include="TransformableObject.h" />
+    <ClInclude Include="UpdatableObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
