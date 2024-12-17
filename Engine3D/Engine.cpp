@@ -313,10 +313,15 @@ void Engine::displayCallback() {
     instance->geometric_Objects.draw_rectangle(LineVerts_rectangle, LineColours_rectangle);
    
     */
+
+instance->cube.resetTransform();  // Resetuje wszystkie transformacje
+instance->cube.translate(5, 0, 0); // Przesuniêcie szeœcianu o (x,y,z)
+instance->cube.rotate(45, 1.0f, 1.0f, 0); // Obrót o X stopni wokó³ osi X i Y
+instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
    
     //rysowanie szeœcianu
     const float cube_vert[] = {
-        //wierzcho³ków szeœcianu
+        //wierzcho³ki szeœcianu
         -1.0f, -1.0f, -1.0f, // 0
         -1.0f, -1.0f,  1.0f, // 1
         -1.0f,  1.0f,  1.0f, // 2
@@ -366,7 +371,8 @@ void Engine::displayCallback() {
         0,7,6,  0,6,1
     };
 
-    instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind);
+    
+    instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind); // Rysowanie szeœcianu
     
     glutSwapBuffers();
 
@@ -375,7 +381,7 @@ void Engine::displayCallback() {
 
 
 
-// Zaktualizowany reshapeCallback do dostosowania macierzy rzutowania
+
 void Engine::reshapeCallback(int width, int height) {
     instance->windowWidth = width;
     instance->windowHeight = height;
@@ -399,7 +405,7 @@ void Engine::reshapeCallback(int width, int height) {
     glLoadIdentity();
 }
 
-// Zaktualizowany keyboardCallback do prze³¹czania trybów rzutowania
+//funkcja do prze³¹czania trybów rzutowania
 void Engine::keyboardCallback(unsigned char key, int x, int y) {
     float cameraSpeed = 0.1f;
 

@@ -1,7 +1,19 @@
 #include "Cube.h"
+#include <iostream>
+
+Cube::Cube() {
+  
+    transformationMatrix = glm::mat4(1.0f);
+}
 
 void Cube::draw(const float cube_vert[], const float cube_norm[], const float cube_cols[], const unsigned char cube_ind[])
 {
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glMultMatrixf(glm::value_ptr(transformationMatrix));
+
+
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, cube_vert);
 
@@ -18,20 +30,32 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+
+    glPopMatrix();
 }
 
-void Cube::update() 
-{
+
+
+void Cube::translate(float tx, float ty, float tz) {
+   
+    transformationMatrix = glm::translate(glm::vec3(tx, ty, tz)) * transformationMatrix;
+    
 }
 
-void Cube::translate()
-{
+void Cube::rotate(float angle, float x, float y, float z) {
+    
+    transformationMatrix = glm::rotate(glm::radians(angle), glm::vec3(x, y, z)) * transformationMatrix;
+    
 }
 
-void Cube::rotate()
-{
+void Cube::scale(float sx, float sy, float sz) {
+    
+    transformationMatrix = glm::scale(glm::vec3(sx, sy, sz)) * transformationMatrix;
+  
 }
 
-void Cube::scale()
-{
+void Cube::resetTransform() {
+    
+    transformationMatrix = glm::mat4(1.0f);
+    
 }

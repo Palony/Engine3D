@@ -40,7 +40,7 @@ private:
     float clearColor[4];
     bool isRunning;
 
-    // Dodano enum dla trybów rzutowania
+    //enum dla trybów rzutowania
     enum class ProjectionMode { PERSPECTIVE, ORTHOGRAPHIC };
     ProjectionMode currentProjectionMode;
 
