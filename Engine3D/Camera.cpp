@@ -3,8 +3,8 @@
 // Konstruktor domyœlny: ustawia kamerê na pozycjê pocz¹tkow¹
 Camera::Camera() {
     setPosition(0.0f, 0.0f, 5.0f);  // Domyœlna pozycja kamery
-    setTarget(0.0f, 0.0f, 0.0f);    // Domyœlny cel
-    setUp(0.0f, 1.0f, 0.0f);        // Domyœlny kierunek "góry"
+    setTarget(0.1f, 0.0f, 0.0f);    // Domyœlny cel
+    setUp(0.0f, 1.0f, 0.0f);        // Domyœlny kierunek "góry" - vector up
 }
 
 // Ustawia pozycjê kamery

@@ -21,7 +21,7 @@ public:
     // Funkcja do zastosowania kamery
     void apply() const;
 
-    // Gettery (opcjonalnie)
+    // Gettery
     const float* getPosition() const;
     const float* getTarget() const;
     const float* getUp() const;

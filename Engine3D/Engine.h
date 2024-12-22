@@ -19,9 +19,12 @@ public:
     void enableKeyboardInput(bool enable);
     void enableDepthBuffer(bool enable);
     void setClearColor(float r, float g, float b, float a);
-
+    void toggleLighting(); // Funkcja prze³¹czania oœwietlenia
     void start();
     void stop();
+
+    void mouseMotionCallback(int x, int y); // Obs³uga ruchu myszki
+
 
     Geometric_Objects geometric_Objects;
     // Wywo³ania funkcji kamery
@@ -39,6 +42,11 @@ private:
     bool depthBufferEnabled;
     float clearColor[4];
     bool isRunning;
+    bool lightingEnabled; // Flaga w³¹czaj¹ca/wy³¹czaj¹ca oœwietlenie
+
+
+
+
 
     //enum dla trybów rzutowania
     enum class ProjectionMode { PERSPECTIVE, ORTHOGRAPHIC };
