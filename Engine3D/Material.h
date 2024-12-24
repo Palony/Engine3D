@@ -1,6 +1,6 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
-
+/*
 #include <GL/glut.h>
 
 class Material {
@@ -13,5 +13,5 @@ public:
     Material();
     void applyMaterial();
 };
-
+*/
 #endif // MATERIAL_H

@@ -3,23 +3,20 @@
 #include "Camera.h"
 #include "Cube.h"
 #include "Lighting.h"
-#include "Material.h"
+//#include "Material.h"
+#include "BitmapHandler.h"
 
 
 Engine* Engine::instance = nullptr;
 
 Light light;
-Material material;
+//Material material;
 
 
 Engine::Engine(int width, int height, const std::string& title, bool fullscreen)
     : windowWidth(width), windowHeight(height), windowTitle(title), isFullscreen(fullscreen),
-    frameRate(60), mouseEnabled(false), keyboardEnabled(false), depthBufferEnabled(false), isRunning(false),
-    currentProjectionMode(ProjectionMode::PERSPECTIVE){
-
-
-
-
+    frameRate(60), mouseEnabled(false), keyboardEnabled(false), depthBufferEnabled(false),
+    isRunning(false), lightingEnabled(true), currentProjectionMode(ProjectionMode::PERSPECTIVE) {
     clearColor[0] = 0.0f; // Red
     clearColor[1] = 0.0f; // Green
     clearColor[2] = 0.0f; // Blue
@@ -32,9 +29,8 @@ Engine::Engine(int width, int height, const std::string& title, bool fullscreen)
         std::cerr << "Wiele instancji Engine nie jest obs³ugiwane." << std::endl;
         exit(EXIT_FAILURE);
     }
-  
-    
 }
+
 
 void Engine::toggleLighting() {
     if (lightingEnabled) {
@@ -140,7 +136,35 @@ void Engine::initGraphics() {
     if (depthBufferEnabled) {
         glEnable(GL_DEPTH_TEST);
     }
+    
+    // Inicjalizacja oœwietlenia
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    GLfloat light_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+    GLfloat light_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+    GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat light_position[] = { 1.0f, 7.0f, 7.0f, 1.0f };
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+    // W³¹czenie GL_COLOR_MATERIAL, aby u¿ywaæ naturalnych kolorów obiektów
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+    BitmapHandler bitmapHandler;
+    GLuint textureID = bitmapHandler.loadTexture("woda.jpg");
+    if (textureID != 0) {
+        instance->textureID = textureID; // Zapisuje id tekstury 
+    }
+    else {
+        std::cerr << "Nie uda³o siê za³adowaæ tekstury!" << std::endl;
+    }
 }
+
 
 void Engine::deinitGraphics() {
     if (depthBufferEnabled) {
@@ -156,6 +180,15 @@ void Engine::displayCallback() {
 
     instance->camera.apply(); // Zastosowanie ustawieñ kamery 
     
+    // Kontrola oœwietlenia na podstawie flagi
+    if (instance->lightingEnabled) {
+        glEnable(GL_LIGHTING);
+    }
+    else {
+        glDisable(GL_LIGHTING);
+    }
+    
+
 
     // Dla rzutowania perspektywicznego przesuwamy scenê do ty³u
     if (instance->currentProjectionMode == ProjectionMode::PERSPECTIVE) {
@@ -187,14 +220,14 @@ void Engine::displayCallback() {
     //    -1.0f, -1.0f, 0.0f); 
 
     // Wywo³anie funkcji rysuj¹cej kulê
-    
+
 
     //rysuje kule
-    //instance->geometric_Objects.draw_sphere(1.0, 16, 16);
+   instance->geometric_Objects.draw_sphere(1.0, 16, 16);
 
 
     //rysuje szeœcian
-   // instance->geometric_Objects.draw_Cube(2);
+    //instance->geometric_Objects.draw_Cube(2);
 
     // Wektor Wierzcholkow dla punktów
     const float PointVerts[] = {
@@ -392,7 +425,7 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
     
     instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind); // Rysowanie szeœcianu
     // Ustawienie materia³u
-    material.applyMaterial();
+  //  material.applyMaterial();
 
     // W³¹czenie œwiat³a
     light.enableLight(GL_LIGHT0);
@@ -422,7 +455,7 @@ void Engine::reshapeCallback(int width, int height) {
     else if (instance->currentProjectionMode == ProjectionMode::ORTHOGRAPHIC) {
         // Ustawienie rzutowania ortograficznego
         float aspect = (float)width / (float)height;
-        glOrtho(-2.0f * aspect, 2.0f * aspect, -2.0f, 2.0f, -100.0f, 100.0f);
+        glOrtho(-2.0f * aspect, 2.0f * aspect, -2.0f, 2.0f, -200.0f, 200.0f);
     }
 
     glMatrixMode(GL_MODELVIEW);
@@ -511,6 +544,25 @@ void Engine::keyboardCallback(unsigned char key, int x, int y) {
         instance->camera.setTarget(position.x + newDirection.x, position.y + newDirection.y, position.z + newDirection.z);
         break;
     }
+    case 'l':
+        if (instance->lightingEnabled) {
+            glDisable(GL_LIGHTING); // Wy³¹czenie oœwietlenia
+            std::cout << "Oswietlenie wylaczone" << std::endl;
+        }
+        else {
+            glEnable(GL_LIGHTING); // W³¹czenie oœwietlenia
+            std::cout << "Oswietlenie wlaczone" << std::endl;
+        }
+        instance->lightingEnabled = !instance->lightingEnabled;
+        break;
+    case 'p': {
+            instance->currentProjectionMode = ProjectionMode::PERSPECTIVE;
+            instance->reshapeCallback(instance->windowWidth, instance->windowHeight);
+    }
+    case 'o': {
+        instance->currentProjectionMode = ProjectionMode::ORTHOGRAPHIC;
+        instance->reshapeCallback(instance->windowWidth, instance->windowHeight);
+        }
     }
 }
 

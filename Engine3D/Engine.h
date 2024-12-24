@@ -44,7 +44,7 @@ private:
     bool isRunning;
     bool lightingEnabled; // Flaga w³¹czaj¹ca/wy³¹czaj¹ca oœwietlenie
 
-
+    GLuint textureID;
 
 
 

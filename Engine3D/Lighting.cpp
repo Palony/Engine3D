@@ -2,7 +2,7 @@
 
 Light::Light() {
     // Domyœlna pozycja œwiat³a
-    position[0] = 0.0f; position[1] = 1.0f; position[2] = 1.0f; position[3] = 1.0f;
+    position[0] = 0.2f; position[1] = 0.5f; position[2] = 1.2f; position[3] = 1.0f;
 
     // Domyœlne t³umienie
     attenuation[0] = 1.0f; // Sta³e
@@ -29,3 +29,4 @@ void Light::enableLight(GLenum lightID) {
     glLightf(lightID, GL_LINEAR_ATTENUATION, attenuation[1]);
     glLightf(lightID, GL_QUADRATIC_ATTENUATION, attenuation[2]);
 }
+
