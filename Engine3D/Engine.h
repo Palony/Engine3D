@@ -6,6 +6,7 @@
 #include "Geometric_Objects.h"
 #include "Camera.h"
 #include "Cube.h"
+#include "Pyramid.h"
 
 class Engine {
 public:
@@ -30,6 +31,7 @@ public:
     // Wywo³ania funkcji kamery
     Camera& getCamera(); // Zwraca referencjê do kamery
     Cube cube;
+    Pyramid pyramid;
 
 private:
     Camera camera;

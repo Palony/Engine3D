@@ -223,7 +223,7 @@ void Engine::displayCallback() {
 
 
     //rysuje kule
-   instance->geometric_Objects.draw_sphere(1.0, 16, 16);
+   //instance->geometric_Objects.draw_sphere(1.0, 16, 16);
 
 
     //rysuje szeœcian
@@ -424,6 +424,42 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
 
     
     instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind); // Rysowanie szeœcianu
+
+    //Rysowanie Piramidy
+    /*
+    const float pyramid_vert[] = {
+        -1.0f, -1.0f, 0.5f,
+        0.0f, -1.0f, -1,
+        1.0f, -1.0f, 0.5f,
+        0.0f, 1.0f, 0.0f
+    };
+
+    const float pryamid_colors[] = {
+        1.0f, 1.0f, 0.6f,
+        1.0f, 0.5f, 0.0f,
+        0.0f, 1.0f, 1.0f,
+        1.0f,1.0f,1.0f
+    };
+
+    const float pyramid_norm[] = {
+    0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f,
+    };
+
+    const unsigned char pyramid_ind[] = {
+        0,3,1, // przednia sciana
+        1,3,2, // prawa sciana
+        2,3,0, // lewa sciana
+        0,1,2 // podstawa
+    };
+
+    instance->pyramid.draw(pyramid_vert, pyramid_norm, pryamid_colors, pyramid_ind);
+    */
+
+
+
     // Ustawienie materia³u
   //  material.applyMaterial();
 
