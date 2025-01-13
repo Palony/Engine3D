@@ -13,6 +13,43 @@ Light light;
 //Material material;
 
 
+const float cube2_vert[] = {
+-1.0f, -1.0f,  1.0f,	 1.0f, -1.0f,  1.0f,	-1.0f,  1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
+-1.0f, -1.0f, -1.0f,	-1.0f,  1.0f, -1.0f,	 1.0f, -1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,
+-1.0f,  1.0f, -1.0f,	-1.0f,  1.0f,  1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f,  1.0f,  1.0f,
+-1.0f, -1.0f, -1.0f,	 1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	 1.0f, -1.0f,  1.0f,
+ 1.0f, -1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f, -1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
+-1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	-1.0f,  1.0f, -1.0f,	-1.0f,  1.0f,  1.0f,
+};
+
+
+
+const unsigned char cube2_ind[] = {
+    0, 1, 2,    // strona 1
+    2, 1, 3,
+    4, 5, 6,    // strona 2
+    6, 5, 7,
+    8, 9, 10,    // strona 3
+    10, 9, 11,
+    12, 13, 14,    // strona 4
+    14, 13, 15,
+    16, 17, 18,    // strona 5
+    18, 17, 19,
+    20, 21, 22,    // strona 6
+    22, 21, 23,
+};
+
+// Wspó³rzêdne tekstury (dla ka¿dego wierzcho³ka):
+const float cube2_texc[] = {
+    1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f,
+    0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+    0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+    1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f,
+    0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+    1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f
+};
+
+
 Engine::Engine(int width, int height, const std::string& title, bool fullscreen)
     : windowWidth(width), windowHeight(height), windowTitle(title), isFullscreen(fullscreen),
     frameRate(60), mouseEnabled(false), keyboardEnabled(false), depthBufferEnabled(false),
@@ -136,10 +173,15 @@ void Engine::initGraphics() {
     if (depthBufferEnabled) {
         glEnable(GL_DEPTH_TEST);
     }
+
+    //Wlaczenie teksturowania
+    glEnable(GL_TEXTURE_2D);
     
     // Inicjalizacja oœwietlenia
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+
+
 
     GLfloat light_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
     GLfloat light_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
@@ -163,6 +205,36 @@ void Engine::initGraphics() {
     else {
         std::cerr << "Nie uda³o siê za³adowaæ tekstury!" << std::endl;
     }
+
+    textureID = bitmapHandler.loadTexture("tex0.png");
+    if (textureID != 0) {
+        instance->TexID[0] = textureID; // Zapisuje id tekstury 
+    }
+    else {
+        std::cerr << "Nie uda³o siê za³adowaæ tekstury!" << std::endl;
+    }
+
+    textureID = bitmapHandler.loadTexture("tex1.png");
+    if (textureID != 0) {
+        instance->TexID[1] = textureID; // Zapisuje id tekstury 
+    }
+    else {
+        std::cerr << "Nie uda³o siê za³adowaæ tekstury!" << std::endl;
+    }
+
+    textureID = bitmapHandler.loadTexture("tex2.png");
+    if (textureID != 0) {
+        instance->TexID[2] = textureID; // Zapisuje id tekstury 
+    }
+    else {
+        std::cerr << "Nie uda³o siê za³adowaæ tekstury!" << std::endl;
+    }
+
+
+
+
+
+
 }
 
 
@@ -195,24 +267,24 @@ void Engine::displayCallback() {
         glTranslatef(0.0f, 0.0f, -5.0f);
     }
 
-    // Rysowanie osi wspó³rzêdnych
-    glBegin(GL_LINES);
-    // Oœ X (czerwona)
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(-2.0f, 0.0f, 0.0f);
-    glVertex3f(2.0f, 0.0f, 0.0f);
-    // Oœ Y (zielona)
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, -2.0f, 0.0f);
-    glVertex3f(0.0f, 2.0f, 0.0f);
-    // Oœ Z (niebieska)
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 0.0f, -2.0f);
-    glVertex3f(0.0f, 0.0f, 2.0f);
+    //// Rysowanie osi wspó³rzêdnych
+    //glBegin(GL_LINES);
+    //// Oœ X (czerwona)
+    //glColor3f(1.0f, 0.0f, 0.0f);
+    //glVertex3f(-2.0f, 0.0f, 0.0f);
+    //glVertex3f(2.0f, 0.0f, 0.0f);
+    //// Oœ Y (zielona)
+    //glColor3f(0.0f, 1.0f, 0.0f);
+    //glVertex3f(0.0f, -2.0f, 0.0f);
+    //glVertex3f(0.0f, 2.0f, 0.0f);
+    //// Oœ Z (niebieska)
+    //glColor3f(0.0f, 0.0f, 1.0f);
+    //glVertex3f(0.0f, 0.0f, -2.0f);
+    //glVertex3f(0.0f, 0.0f, 2.0f);
 
 
 
-    glEnd();
+    //glEnd();
 
     //instance->geometric_Objects.draw_rectangle(-1.0f, 1.0f, 0.0f, 
     //    1.0f, 1.0f, 0.0f,   
@@ -244,7 +316,7 @@ void Engine::displayCallback() {
     };
 
     // Wywo³anie metody rysuj¹cej punkty
-    instance->geometric_Objects.draw_points(PointVerts, PointColours, 3); 
+    //instance->geometric_Objects.draw_points(PointVerts, PointColours, 3); 
 
     //Rysowanie lini
 
@@ -262,7 +334,7 @@ void Engine::displayCallback() {
         1.0f, 0.9f, 0.0f,
     };
 
-    instance->geometric_Objects.draw_line(LineVerts, LineColours);
+    //instance->geometric_Objects.draw_line(LineVerts, LineColours);
     
     /*
     // rysowanie ³amanych
@@ -365,11 +437,15 @@ void Engine::displayCallback() {
    
     */
 
+
+
 instance->cube.resetTransform();  // Resetuje wszystkie transformacje
 instance->cube.translate(5, 0, 0); // Przesuniêcie szeœcianu o (x,y,z)
 instance->cube.rotate(45, 1.0f, 1.0f, 0); // Obrót o X stopni wokó³ osi X i Y
 instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
    
+
+
     //rysowanie szeœcianu
     const float cube_vert[] = {
         //wierzcho³ki szeœcianu
@@ -385,14 +461,14 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
 
     //normalne szeœcianu
     const float cube_norm[] = {
-        0.0f, 0.0f, 1.0f,  
-        0.0f, 0.0f, 1.0f,  
-        0.0f, 0.0f, 1.0f,  
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f
+    0.0,  0.0, -1.0,  // Front face normals
+    0.0,  0.0, -1.0,
+    0.0,  0.0, -1.0,
+    0.0,  0.0, -1.0,
+    0.0,  0.0,  1.0,  //Back face normals
+    0.0,  0.0,  1.0,
+    0.0,  0.0,  1.0,
+    0.0,  0.0,  1.0
     };
     //kolory wierzcho³ków
     const float cube_cols[] = {
@@ -422,8 +498,135 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
         0,7,6,  0,6,1
     };
 
+    const float cube_texc[] = {
+        0.0, 0.0,  // 0 - Front bottom - left
+        1.0, 0.0,  // 1 - Front bottom - right
+        1.0, 1.0,  // 2 - Front top - right
+        0.0, 1.0,  // 3 - Front top - left
+        0.0, 0.0,  // 4 - Back bottom - left
+        1.0, 0.0,  // 5 - Back bottom - right
+        1.0, 1.0,  // 6 - Back top - right
+        0.0, 1.0   // 7 - Back top - left
+    };
+
+
+
+
+
+
+
+
     
-    instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind); // Rysowanie szeœcianu
+    //instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind); // Rysowanie szeœcianu
+    
+
+    
+    // Szeœcian z lewej tekstura #0:
+    glBindTexture(GL_TEXTURE_2D, instance->TexID[0]);
+    glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
+
+    // Szeœcian w œrodku tekstura #1:
+    glBindTexture(GL_TEXTURE_2D, instance->TexID[1]);
+    glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
+
+    // Szeœcian z prawej tekstura #2:
+    glBindTexture(GL_TEXTURE_2D, instance->TexID[2]);
+    glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
+
+
+    // Przygotowanie szeœcianu:
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    // Tabela z punktami:
+    glVertexPointer(3, GL_FLOAT, 0, cube2_vert);
+    // Tabela ze wspó³rzêdnymi tekstur (2 wspó³rzêdne):
+    glTexCoordPointer(2, GL_FLOAT, 0, cube2_texc);
+
+
+    
+    /*
+
+    const float cube2_vert[] = {
+    -1.0f, -1.0f,  1.0f,	 1.0f, -1.0f,  1.0f,	-1.0f,  1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
+    -1.0f, -1.0f, -1.0f,	-1.0f,  1.0f, -1.0f,	 1.0f, -1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,	-1.0f,  1.0f,  1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f,  1.0f,  1.0f,
+    -1.0f, -1.0f, -1.0f,	 1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	 1.0f, -1.0f,  1.0f,
+     1.0f, -1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f, -1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
+    -1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	-1.0f,  1.0f, -1.0f,	-1.0f,  1.0f,  1.0f,
+    };
+
+
+
+    const unsigned char cube2_ind[] = {
+	    0, 1, 2,    // strona 1
+	    2, 1, 3,
+	    4, 5, 6,    // strona 2
+	    6, 5, 7,
+	    8, 9, 10,    // strona 3
+	    10, 9, 11,
+	    12, 13, 14,    // strona 4
+	    14, 13, 15,
+	    16, 17, 18,    // strona 5
+	    18, 17, 19,
+	    20, 21, 22,    // strona 6
+	    22, 21, 23,
+    };
+
+    // Wspó³rzêdne tekstury (dla ka¿dego wierzcho³ka):
+    const float cube2_texc[] = {
+        1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f,
+        0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+        0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+        1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f,
+        0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+        1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f
+    };
+    */
+
+
+
+    /*
+	// Przygotowanie szeœcianu:
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	// Tabela z punktami:
+	glVertexPointer(3, GL_FLOAT, 0, cube_vert);
+	// Tabela ze wspó³rzêdnymi tekstur (2 wspó³rzêdne):
+	glTexCoordPointer(2, GL_FLOAT, 0, cube_texc);
+
+    glBindTexture(GL_TEXTURE_2D, TexID[0]);
+    //glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
+
+    glBindTexture(GL_TEXTURE_2D, TexID[1]);
+    //glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
+
+    glBindTexture(GL_TEXTURE_2D, TexID[2]);
+    //glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
+
+
+
+
+    glGenTextures(3, TexID);
+    BitmapHandler bt;
+
+    bt.bindTexture(TexID[0]);
+    bt.loadTexture("tex0.png");
+    bt.bindTexture(TexID[1]);
+    bt.loadTexture("tex1.png");
+    bt.bindTexture(TexID[2]);
+    bt.loadTexture("tex2.png");
+    */
+
+
+
+
+
+    
+        //instance->cube.draw_w_texture(cube_vert, cube_norm, cube_ind, cube_texc);
+    
+
+
+
 
     //Rysowanie Piramidy
     /*
@@ -594,11 +797,14 @@ void Engine::keyboardCallback(unsigned char key, int x, int y) {
     case 'p': {
             instance->currentProjectionMode = ProjectionMode::PERSPECTIVE;
             instance->reshapeCallback(instance->windowWidth, instance->windowHeight);
+            break;
     }
     case 'o': {
         instance->currentProjectionMode = ProjectionMode::ORTHOGRAPHIC;
         instance->reshapeCallback(instance->windowWidth, instance->windowHeight);
+        break;
         }
+
     }
 }
 

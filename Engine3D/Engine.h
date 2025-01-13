@@ -33,6 +33,9 @@ public:
     Cube cube;
     Pyramid pyramid;
 
+
+
+
 private:
     Camera camera;
     int windowWidth, windowHeight;
@@ -47,7 +50,8 @@ private:
     bool lightingEnabled; // Flaga w³¹czaj¹ca/wy³¹czaj¹ca oœwietlenie
 
     GLuint textureID;
-
+    GLuint TexID[3];
+    
 
 
     //enum dla trybów rzutowania

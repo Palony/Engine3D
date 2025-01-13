@@ -149,6 +149,7 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="ShapeObject.cpp" />
+    <ClCompile Include="TextureObject.cpp" />
     <ClCompile Include="TransformableObject.cpp" />
     <ClCompile Include="UpdatableObject.cpp" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="pyramid.h" />
     <ClInclude Include="ShapeObject.h" />
+    <ClInclude Include="TextureObject.h" />
     <ClInclude Include="TransformableObject.h" />
     <ClInclude Include="UpdatableObject.h" />
   </ItemGroup>
