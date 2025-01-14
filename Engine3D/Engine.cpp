@@ -519,8 +519,10 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
     
     //instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind); // Rysowanie szeœcianu
     
+	instance->cube.TexID[0] = instance->TexID[0];
+	instance->cube.draw_w_texture(cube2_vert, cube_norm, cube2_ind, cube2_texc); // Rysowanie szeœcianu z tekstur¹
 
-    
+    /*
     // Szeœcian z lewej tekstura #0:
     glBindTexture(GL_TEXTURE_2D, instance->TexID[0]);
     glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
@@ -541,6 +543,8 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
     glVertexPointer(3, GL_FLOAT, 0, cube2_vert);
     // Tabela ze wspó³rzêdnymi tekstur (2 wspó³rzêdne):
     glTexCoordPointer(2, GL_FLOAT, 0, cube2_texc);
+
+    */
 
 
     

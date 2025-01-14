@@ -46,16 +46,16 @@ void Cube::draw_w_texture(const float cube_vert[], const float cube_norm[], cons
     glTexCoordPointer(2, GL_FLOAT, 0, cube_texc);
 
     //// Szeœcian z lewej tekstura #0:
-    //glBindTexture(GL_TEXTURE_2D, instance->TexID[0]);
-    //glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
+    glBindTexture(GL_TEXTURE_2D, TexID[0]);
+    glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
 
     //// Szeœcian w œrodku tekstura #1:
-    //glBindTexture(GL_TEXTURE_2D, instance->TexID[1]);
-    //glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
+    glBindTexture(GL_TEXTURE_2D, TexID[1]);
+    glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
 
     //// Szeœcian z prawej tekstura #2:
-    //glBindTexture(GL_TEXTURE_2D, instance->TexID[2]);
-    //glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
+    glBindTexture(GL_TEXTURE_2D, TexID[2]);
+    glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
 
 
 
