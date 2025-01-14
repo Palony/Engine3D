@@ -9,9 +9,12 @@ Cube::Cube() {
 void Cube::draw(const float cube_vert[], const float cube_norm[], const float cube_cols[], const unsigned char cube_ind[])
 {
 
+
+
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glMultMatrixf(glm::value_ptr(transformationMatrix));
+
 
 
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -33,31 +36,24 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
 
 
     glPopMatrix();
+    glutSwapBuffers();
 }
 
-void Cube::draw_w_texture(const float cube_vert[], const float cube_norm[], const unsigned char cube_ind[],const float cube_texc[])
+void Cube::draw_w_texture(const float obj_vert[], const float obj_norm[], const unsigned char obj_ind[], const float obj_texc[])
 {
-    // Przygotowanie szeœcianu:
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    // Tabela z punktami:
-    glVertexPointer(3, GL_FLOAT, 0, cube_vert);
-    // Tabela ze wspó³rzêdnymi tekstur (2 wspó³rzêdne):
-    glTexCoordPointer(2, GL_FLOAT, 0, cube_texc);
+
+
+
 
     //// Szeœcian z lewej tekstura #0:
     glBindTexture(GL_TEXTURE_2D, TexID[0]);
-    glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
-
-    //// Szeœcian w œrodku tekstura #1:
-    glBindTexture(GL_TEXTURE_2D, TexID[1]);
-    glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
-
-    //// Szeœcian z prawej tekstura #2:
-    glBindTexture(GL_TEXTURE_2D, TexID[2]);
-    glDrawElements(GL_TRIANGLES, sizeof(cube_ind), GL_UNSIGNED_BYTE, cube_ind);
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, obj_ind);
 
 
+
+
+
+    glutSwapBuffers();
 
 }
 

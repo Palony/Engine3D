@@ -169,6 +169,15 @@ void Engine::stop() {
 }
 
 void Engine::initGraphics() {
+    // Przygotowanie szeœcianu:
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    // Tabela z punktami:
+    glVertexPointer(3, GL_FLOAT, 0, cube2_vert);
+    // Tabela ze wspó³rzêdnymi tekstur (2 wspó³rzêdne):
+    glTexCoordPointer(2, GL_FLOAT, 0, cube2_texc);
+
+
     glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
     if (depthBufferEnabled) {
         glEnable(GL_DEPTH_TEST);
@@ -438,12 +447,12 @@ void Engine::displayCallback() {
     */
 
 
-
+/*
 instance->cube.resetTransform();  // Resetuje wszystkie transformacje
 instance->cube.translate(5, 0, 0); // Przesuniêcie szeœcianu o (x,y,z)
 instance->cube.rotate(45, 1.0f, 1.0f, 0); // Obrót o X stopni wokó³ osi X i Y
 instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
-   
+   */
 
 
     //rysowanie szeœcianu
@@ -519,6 +528,7 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
     
     //instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind); // Rysowanie szeœcianu
     
+
 	instance->cube.TexID[0] = instance->TexID[0];
 	instance->cube.draw_w_texture(cube2_vert, cube_norm, cube2_ind, cube2_texc); // Rysowanie szeœcianu z tekstur¹
 
@@ -673,7 +683,7 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
     // W³¹czenie œwiat³a
     light.enableLight(GL_LIGHT0);
     
-    glutSwapBuffers();
+    
 
     
 }

@@ -4,7 +4,7 @@ void TextureObject::draw()
 {
 }
 
-void TextureObject::draw_w_texture(const float cube_vert[], const float cube_norm[], const unsigned char cube_ind[],const float cube_texc[])
+void TextureObject::draw_w_texture(const float obj_vert[], const float obj_norm[], const unsigned char obj_ind[],const float obj_texc[])
 {
 }
 
