@@ -36,24 +36,34 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
 
 
     glPopMatrix();
-    glutSwapBuffers();
+    
 }
 
 void Cube::draw_w_texture(const float obj_vert[], const float obj_norm[], const unsigned char obj_ind[], const float obj_texc[])
 {
+    glEnable(GL_TEXTURE_2D);
 
+    glPushMatrix();
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, obj_vert);
 
-
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glNormalPointer(GL_FLOAT, 0, obj_norm);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
     //// Szeœcian z lewej tekstura #0:
     glBindTexture(GL_TEXTURE_2D, TexID[0]);
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, obj_ind);
 
 
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 
 
-    glutSwapBuffers();
+
+    glPopMatrix();
 
 }
 

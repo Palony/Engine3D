@@ -49,6 +49,18 @@ const float cube2_texc[] = {
     1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f
 };
 
+//normalne szeœcianu
+const float cube2_norm[] = {
+0.0,  0.0, -1.0,  // Front face normals
+0.0,  0.0, -1.0,
+0.0,  0.0, -1.0,
+0.0,  0.0, -1.0,
+0.0,  0.0,  1.0,  //Back face normals
+0.0,  0.0,  1.0,
+0.0,  0.0,  1.0,
+0.0,  0.0,  1.0
+};
+
 
 Engine::Engine(int width, int height, const std::string& title, bool fullscreen)
     : windowWidth(width), windowHeight(height), windowTitle(title), isFullscreen(fullscreen),
@@ -169,9 +181,6 @@ void Engine::stop() {
 }
 
 void Engine::initGraphics() {
-    // Przygotowanie szeœcianu:
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     // Tabela z punktami:
     glVertexPointer(3, GL_FLOAT, 0, cube2_vert);
     // Tabela ze wspó³rzêdnymi tekstur (2 wspó³rzêdne):
@@ -184,7 +193,7 @@ void Engine::initGraphics() {
     }
 
     //Wlaczenie teksturowania
-    glEnable(GL_TEXTURE_2D);
+   
     
     // Inicjalizacja oœwietlenia
     glEnable(GL_LIGHTING);
@@ -304,7 +313,7 @@ void Engine::displayCallback() {
 
 
     //rysuje kule
-   //instance->geometric_Objects.draw_sphere(1.0, 16, 16);
+   instance->geometric_Objects.draw_sphere(1.0, 16, 16);
 
 
     //rysuje szeœcian
@@ -447,12 +456,12 @@ void Engine::displayCallback() {
     */
 
 
-/*
+
 instance->cube.resetTransform();  // Resetuje wszystkie transformacje
 instance->cube.translate(5, 0, 0); // Przesuniêcie szeœcianu o (x,y,z)
 instance->cube.rotate(45, 1.0f, 1.0f, 0); // Obrót o X stopni wokó³ osi X i Y
 instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
-   */
+   
 
 
     //rysowanie szeœcianu
@@ -529,32 +538,10 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
     //instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind); // Rysowanie szeœcianu
     
 
-	instance->cube.TexID[0] = instance->TexID[0];
-	instance->cube.draw_w_texture(cube2_vert, cube_norm, cube2_ind, cube2_texc); // Rysowanie szeœcianu z tekstur¹
-
-    /*
-    // Szeœcian z lewej tekstura #0:
-    glBindTexture(GL_TEXTURE_2D, instance->TexID[0]);
-    glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
-
-    // Szeœcian w œrodku tekstura #1:
-    glBindTexture(GL_TEXTURE_2D, instance->TexID[1]);
-    glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
-
-    // Szeœcian z prawej tekstura #2:
-    glBindTexture(GL_TEXTURE_2D, instance->TexID[2]);
-    glDrawElements(GL_TRIANGLES, sizeof(cube2_ind), GL_UNSIGNED_BYTE, cube2_ind);
+	//instance->cube2.TexID[0] = instance->TexID[0];
+	//instance->cube2.draw_w_texture(cube2_vert, cube2_norm, cube2_ind, cube2_texc); // Rysowanie szeœcianu z tekstur¹
 
 
-    // Przygotowanie szeœcianu:
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    // Tabela z punktami:
-    glVertexPointer(3, GL_FLOAT, 0, cube2_vert);
-    // Tabela ze wspó³rzêdnymi tekstur (2 wspó³rzêdne):
-    glTexCoordPointer(2, GL_FLOAT, 0, cube2_texc);
-
-    */
 
 
     
@@ -683,7 +670,7 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
     // W³¹czenie œwiat³a
     light.enableLight(GL_LIGHT0);
     
-    
+    glutSwapBuffers();
 
     
 }
@@ -819,7 +806,19 @@ void Engine::keyboardCallback(unsigned char key, int x, int y) {
         break;
         }
 
+    case '1': {
+        glShadeModel(GL_FLAT);
+        std::cout << "GL_FLAT" << std::endl;
+        break;
     }
+    case '2': {
+        glShadeModel(GL_SMOOTH);
+        std::cout << "GL_SMOOTH" << std::endl;
+        break;
+    }
+    }
+
+
 }
 
 

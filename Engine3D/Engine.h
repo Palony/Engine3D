@@ -31,6 +31,7 @@ public:
     // Wywo³ania funkcji kamery
     Camera& getCamera(); // Zwraca referencjê do kamery
     Cube cube;
+    Cube cube2;
     Pyramid pyramid;
 
 
