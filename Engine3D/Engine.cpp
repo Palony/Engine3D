@@ -12,6 +12,121 @@ Engine* Engine::instance = nullptr;
 Light light;
 //Material material;
 
+const float base_vert[] = {
+    // Dolna podstawa
+    -0.5f, -2.0f, -0.5f,  // Wierzcho³ek 0
+     0.5f, -2.0f, -0.5f,  // Wierzcho³ek 1
+     0.5f, -2.0f,  0.5f,  // Wierzcho³ek 2
+    -0.5f, -2.0f,  0.5f,  // Wierzcho³ek 3
+
+    // Górna podstawa
+    -0.5f,  0.0f, -0.5f,  // Wierzcho³ek 4
+     0.5f,  0.0f, -0.5f,  // Wierzcho³ek 5
+     0.5f,  0.0f,  0.5f,  // Wierzcho³ek 6
+    -0.5f,  0.0f,  0.5f   // Wierzcho³ek 7
+};
+
+const float top_vert[] = {
+    // Podstawa ostros³upa
+    -0.5f, 0.0f, -0.5f,  // Wierzcho³ek 0
+     0.5f, 0.0f, -0.5f,  // Wierzcho³ek 1
+     0.5f, 0.0f,  0.5f,  // Wierzcho³ek 2
+    -0.5f, 0.0f,  0.5f,  // Wierzcho³ek 3
+
+    // Wierzcho³ek szczytowy
+     0.0f, 1.0f,  0.0f   // Wierzcho³ek 4
+};
+
+const float base_colors[] = {
+    // Kolory dla dolnej podstawy
+    0.5f, 0.5f, 0.5f,  // Wierzcho³ek 0 (czerwony)
+    0.5f, 0.5f, 0.5f,  // Wierzcho³ek 1 (zielony)
+    0.5f, 0.5f, 0.5f,  // Wierzcho³ek 2 (niebieski)
+    0.5f, 0.5f, 0.5f,  // Wierzcho³ek 3 (¿ó³ty)
+
+    // Kolory dla górnej podstawy
+    0.5f, 0.5f, 0.5f,  // Wierzcho³ek 4 (fioletowy)
+    0.5f, 0.5f, 0.5f,  // Wierzcho³ek 5 (turkusowy)
+    0.5f, 0.5f, 0.5f,  // Wierzcho³ek 6 (szary)
+    0.5f, 0.5f, 0.5f   // Wierzcho³ek 7 (bia³y)
+};
+
+const float top_colors[] = {
+    // Kolory dla podstawy
+    1.0f, 0.0f, 0.0f,  // Wierzcho³ek 0 (pomarañczowy)
+    1.0f, 0.5f, 1.0f,  // Wierzcho³ek 1 (niebieskozielony)
+    1.0f, 0.0f, 0.0f,  // Wierzcho³ek 2 (¿ó³ty)
+    1.5f, 0.0f, 0.0f,  // Wierzcho³ek 3 (fioletowy)
+
+    // Kolor dla wierzcho³ka szczytowego
+    1.0f, 0.0f, 0.0f   // Wierzcho³ek 4 (czerwony)
+};
+
+
+const float base_normals[] = {
+    // Normalne dla dolnej podstawy (w dó³)
+    0.0f, -1.0f, 0.0f,  // Wierzcho³ek 0
+    0.0f, -1.0f, 0.0f,  // Wierzcho³ek 1
+    0.0f, -1.0f, 0.0f,  // Wierzcho³ek 2
+    0.0f, -1.0f, 0.0f,  // Wierzcho³ek 3
+
+    // Normalne dla górnej podstawy (w górê)
+    0.0f, 1.0f, 0.0f,   // Wierzcho³ek 4
+    0.0f, 1.0f, 0.0f,   // Wierzcho³ek 5
+    0.0f, 1.0f, 0.0f,   // Wierzcho³ek 6
+    0.0f, 1.0f, 0.0f    // Wierzcho³ek 7
+};
+
+const float top_normals[] = {
+    // Normalne dla podstawy
+    0.0f, -1.0f,  0.0f,  // Wierzcho³ek 0
+    0.0f, -1.0f,  0.0f,  // Wierzcho³ek 1
+    0.0f, -1.0f,  0.0f,  // Wierzcho³ek 2
+    0.0f, -1.0f,  0.0f,  // Wierzcho³ek 3
+
+    // Normalne dla œcian bocznych
+    0.0f,  0.447f,  0.894f,  // Œciana 1
+   -0.894f,  0.447f,  0.0f,  // Œciana 2
+    0.0f,  0.447f, -0.894f,  // Œciana 3
+    0.894f,  0.447f,  0.0f   // Œciana 4
+};
+
+const unsigned char base_indices[] = {
+    // Dolna podstawa (2 trójk¹ty)
+    0, 1, 2,
+    0, 2, 3,
+
+    // Górna podstawa (2 trójk¹ty)
+    4, 5, 6,
+    4, 6, 7,
+
+    // Œciany boczne (4 œciany, 2 trójk¹ty ka¿da)
+    0, 1, 5,
+    0, 5, 4,
+
+    1, 2, 6,
+    1, 6, 5,
+
+    2, 3, 7,
+    2, 7, 6,
+
+    3, 0, 4,
+    3, 4, 7
+};
+
+const unsigned char top_indices[] = {
+    // Podstawa (2 trójk¹ty)
+    0, 1, 2,
+    0, 2, 3,
+
+    // Œciany boczne (4 œciany, 1 trójk¹t ka¿da)
+    0, 1, 4,
+    1, 2, 4,
+    2, 3, 4,
+    3, 0, 4
+};
+
+
 
 const float cube2_vert[] = {
 -1.0f, -1.0f,  1.0f,	 1.0f, -1.0f,  1.0f,	-1.0f,  1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
@@ -21,6 +136,7 @@ const float cube2_vert[] = {
  1.0f, -1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f, -1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
 -1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	-1.0f,  1.0f, -1.0f,	-1.0f,  1.0f,  1.0f,
 };
+
 
 
 
@@ -313,7 +429,7 @@ void Engine::displayCallback() {
 
 
     //rysuje kule
-   instance->geometric_Objects.draw_sphere(1.0, 16, 16);
+   //instance->geometric_Objects.draw_sphere(1.0, 16, 16);
 
 
     //rysuje szeœcian
@@ -666,6 +782,10 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
 
     // Ustawienie materia³u
   //  material.applyMaterial();
+    instance->cube.draw(base_vert, base_normals, base_colors, base_indices);
+    instance->pyramid.draw(top_vert, top_normals, top_colors, top_indices);
+
+
 
     // W³¹czenie œwiat³a
     light.enableLight(GL_LIGHT0);

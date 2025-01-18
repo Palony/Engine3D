@@ -23,7 +23,7 @@ void Pyramid::draw(const float pryamid_vert[], const float pryamid_norm[], const
 
 
 
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_BYTE, pyramid_ind);
+    glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_BYTE, pyramid_ind);
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
