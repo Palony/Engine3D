@@ -47,3 +47,8 @@ void Pyramid::scale(float sx, float sy, float sz)
 {
     transformationMatrix = glm::scale(glm::vec3(sx, sy, sz)) * transformationMatrix;
 }
+void Pyramid::resetTransform() {
+
+    transformationMatrix = glm::mat4(1.0f);
+
+}

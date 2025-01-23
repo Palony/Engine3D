@@ -788,16 +788,21 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
  //demo
 
 //rakieta
-glPushMatrix();
-glTranslatef(0.0f, rocketY, -5.0f);
-instance->cube.draw(base_vert, base_normals, base_colors, base_indices); 
+instance->cube.resetTransform();
+instance->pyramid.resetTransform();
+
+// Ustawienie translacji dla rakiety
+instance->cube.translate(0.0f, rocketY, -5.0f);
+instance->pyramid.translate(0.0f, rocketY, -5.0f); 
+
+// Rysowanie obiektów
+instance->cube.draw(base_vert, base_normals, base_colors, base_indices);
 instance->pyramid.draw(top_vert, top_normals, top_colors, top_indices);
-glPopMatrix();
 rocketY += rocketSpeed;
 if (rocketY > 10.0f) { // Gdy rakieta przekroczy pewn¹ wysokoœæ, wraca na dó³
     rocketY = -5.0f;
 }
-
+//demo_end
 
     // W³¹czenie œwiat³a
     light.enableLight(GL_LIGHT0);
