@@ -8,7 +8,7 @@ Pyramid::Pyramid()
 void Pyramid::draw(const float pryamid_vert[], const float pryamid_norm[], const float pyramid_cols[], const unsigned char pyramid_ind[])
 {
     glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
+  //  glPushMatrix();
     glMultMatrixf(glm::value_ptr(transformationMatrix));
 
 
@@ -29,17 +29,21 @@ void Pyramid::draw(const float pryamid_vert[], const float pryamid_norm[], const
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 
-    glPopMatrix();
+   // glPopMatrix();
 }
 
-void Pyramid::translate()
+void Pyramid::translate(float tx, float ty, float tz)
 {
+    transformationMatrix = glm::translate(glm::vec3(tx, ty, tz)) * transformationMatrix;
 }
 
-void Pyramid::rotate()
+void Pyramid::rotate(float angle, float x, float y, float z)
 {
+    transformationMatrix = glm::rotate(glm::radians(angle), glm::vec3(x, y, z)) * transformationMatrix;
+
 }
 
-void Pyramid::scale()
+void Pyramid::scale(float sx, float sy, float sz)
 {
+    transformationMatrix = glm::scale(glm::vec3(sx, sy, sz)) * transformationMatrix;
 }

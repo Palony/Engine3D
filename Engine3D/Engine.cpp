@@ -8,6 +8,8 @@
 
 
 Engine* Engine::instance = nullptr;
+float rocketY = 0.0f; // Pozycja pionowa rakiety
+float rocketSpeed = 0.05f; // Prêdkoœæ lotu rakiety
 
 Light light;
 //Material material;
@@ -385,6 +387,7 @@ void Engine::displayCallback() {
     glLoadIdentity();
 
     instance->camera.apply(); // Zastosowanie ustawieñ kamery 
+   
     
     // Kontrola oœwietlenia na podstawie flagi
     if (instance->lightingEnabled) {
@@ -573,11 +576,11 @@ void Engine::displayCallback() {
 
 
 
-instance->cube.resetTransform();  // Resetuje wszystkie transformacje
+/*instance->cube.resetTransform();  // Resetuje wszystkie transformacje
 instance->cube.translate(5, 0, 0); // Przesuniêcie szeœcianu o (x,y,z)
 instance->cube.rotate(45, 1.0f, 1.0f, 0); // Obrót o X stopni wokó³ osi X i Y
 instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
-   
+   */
 
 
     //rysowanie szeœcianu
@@ -782,9 +785,18 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
 
     // Ustawienie materia³u
   //  material.applyMaterial();
-    instance->cube.draw(base_vert, base_normals, base_colors, base_indices);
-    instance->pyramid.draw(top_vert, top_normals, top_colors, top_indices);
+ //demo
 
+//rakieta
+glPushMatrix();
+glTranslatef(0.0f, rocketY, -5.0f);
+instance->cube.draw(base_vert, base_normals, base_colors, base_indices); 
+instance->pyramid.draw(top_vert, top_normals, top_colors, top_indices);
+glPopMatrix();
+rocketY += rocketSpeed;
+if (rocketY > 10.0f) { // Gdy rakieta przekroczy pewn¹ wysokoœæ, wraca na dó³
+    rocketY = -5.0f;
+}
 
 
     // W³¹czenie œwiat³a
@@ -936,6 +948,18 @@ void Engine::keyboardCallback(unsigned char key, int x, int y) {
         std::cout << "GL_SMOOTH" << std::endl;
         break;
     }
+    case 'r': // Resetuj rakietê
+        rocketY = 0.0f;
+        break;
+    case '+': // Zwiêksz prêdkoœæ
+        rocketSpeed += 0.01f;
+        break;
+    case '-': // Zmniejsz prêdkoœæ
+        rocketSpeed -= 0.01f;
+        break;
+    case ']': // Pauza/wznów
+        rocketSpeed = (rocketSpeed == 0.0f) ? 0.05f : 0.0f;
+        break;
     }
 
 

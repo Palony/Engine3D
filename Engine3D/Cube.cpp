@@ -12,7 +12,7 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
 
 
     glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
+    //glPushMatrix();
     //glMultMatrixf(glm::value_ptr(transformationMatrix));
 
 
@@ -35,7 +35,7 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
 
 
 
-    glPopMatrix();
+//    glPopMatrix();
     
 }
 
