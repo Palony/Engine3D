@@ -53,6 +53,7 @@ private:
 
     GLuint textureID;
     GLuint TexID[3];
+    GLuint Rocket_tex;
     
 
 

@@ -44,6 +44,7 @@ void Cube::draw_w_texture(const float obj_vert[], const float obj_norm[], const 
     glEnable(GL_TEXTURE_2D);
 
     glPushMatrix();
+    glMultMatrixf(glm::value_ptr(transformationMatrix));
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, obj_vert);
 

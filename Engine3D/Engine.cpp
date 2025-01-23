@@ -15,30 +15,24 @@ Light light;
 //Material material;
 
 const float base_vert[] = {
-    // Dolna podstawa
-    -0.5f, -2.0f, -0.5f,  // Wierzcho³ek 0
-     0.5f, -2.0f, -0.5f,  // Wierzcho³ek 1
-     0.5f, -2.0f,  0.5f,  // Wierzcho³ek 2
-    -0.5f, -2.0f,  0.5f,  // Wierzcho³ek 3
-
-    // Górna podstawa
-    -0.5f,  0.0f, -0.5f,  // Wierzcho³ek 4
-     0.5f,  0.0f, -0.5f,  // Wierzcho³ek 5
-     0.5f,  0.0f,  0.5f,  // Wierzcho³ek 6
-    -0.5f,  0.0f,  0.5f   // Wierzcho³ek 7
+-1.0f, -3.0f,  1.0f,   1.0f, -3.0f,  1.0f,  -1.0f,  1.0f,  1.0f,   1.0f,  1.0f,  1.0f,
+-1.0f, -3.0f, -1.0f,  -1.0f,  1.0f, -1.0f,   1.0f, -3.0f, -1.0f,   1.0f,  1.0f, -1.0f,
+-1.0f,  1.0f, -1.0f,  -1.0f,  1.0f,  1.0f,   1.0f,  1.0f, -1.0f,   1.0f,  1.0f,  1.0f,
+-1.0f, -3.0f, -1.0f,   1.0f, -3.0f, -1.0f,  -1.0f, -3.0f,  1.0f,   1.0f, -3.0f,  1.0f,
+ 1.0f, -3.0f, -1.0f,   1.0f,  1.0f, -1.0f,   1.0f, -3.0f,  1.0f,   1.0f,  1.0f,  1.0f,
+-1.0f, -3.0f, -1.0f,  -1.0f, -3.0f,  1.0f,  -1.0f,  1.0f, -1.0f,  -1.0f,  1.0f,  1.0f,
 };
 
 const float top_vert[] = {
-    // Podstawa ostros³upa
-    -0.5f, 0.0f, -0.5f,  // Wierzcho³ek 0
-     0.5f, 0.0f, -0.5f,  // Wierzcho³ek 1
-     0.5f, 0.0f,  0.5f,  // Wierzcho³ek 2
-    -0.5f, 0.0f,  0.5f,  // Wierzcho³ek 3
+    // Podstawa ostros³upa (rozszerzona do wymiarów base)
+    -1.0f, 1.0f, -1.0f,  // Wierzcho³ek 0
+     1.0f, 1.0f, -1.0f,  // Wierzcho³ek 1
+     1.0f, 1.0f,  1.0f,  // Wierzcho³ek 2
+    -1.0f, 1.0f,  1.0f,  // Wierzcho³ek 3
 
-    // Wierzcho³ek szczytowy
-     0.0f, 1.0f,  0.0f   // Wierzcho³ek 4
+    // Wierzcho³ek szczytowy (pozostaje bez zmian)
+     0.0f, 3.0f,  0.0f   // Wierzcho³ek 4
 };
-
 const float base_colors[] = {
     // Kolory dla dolnej podstawy
     0.5f, 0.5f, 0.5f,  // Wierzcho³ek 0 (czerwony)
@@ -66,17 +60,14 @@ const float top_colors[] = {
 
 
 const float base_normals[] = {
-    // Normalne dla dolnej podstawy (w dó³)
-    0.0f, -1.0f, 0.0f,  // Wierzcho³ek 0
-    0.0f, -1.0f, 0.0f,  // Wierzcho³ek 1
-    0.0f, -1.0f, 0.0f,  // Wierzcho³ek 2
-    0.0f, -1.0f, 0.0f,  // Wierzcho³ek 3
-
-    // Normalne dla górnej podstawy (w górê)
-    0.0f, 1.0f, 0.0f,   // Wierzcho³ek 4
-    0.0f, 1.0f, 0.0f,   // Wierzcho³ek 5
-    0.0f, 1.0f, 0.0f,   // Wierzcho³ek 6
-    0.0f, 1.0f, 0.0f    // Wierzcho³ek 7
+0.0,  0.0, -1.0,  // Front face normals
+0.0,  0.0, -1.0,
+0.0,  0.0, -1.0,
+0.0,  0.0, -1.0,
+0.0,  0.0,  1.0,  //Back face normals
+0.0,  0.0,  1.0,
+0.0,  0.0,  1.0,
+0.0,  0.0,  1.0
 };
 
 const float top_normals[] = {
@@ -94,26 +85,27 @@ const float top_normals[] = {
 };
 
 const unsigned char base_indices[] = {
-    // Dolna podstawa (2 trójk¹ty)
-    0, 1, 2,
-    0, 2, 3,
+    0, 1, 2,    // strona 1
+    2, 1, 3,
+    4, 5, 6,    // strona 2
+    6, 5, 7,
+    8, 9, 10,    // strona 3
+    10, 9, 11,
+    12, 13, 14,    // strona 4
+    14, 13, 15,
+    16, 17, 18,    // strona 5
+    18, 17, 19,
+    20, 21, 22,    // strona 6
+    22, 21, 23,
+};
 
-    // Górna podstawa (2 trójk¹ty)
-    4, 5, 6,
-    4, 6, 7,
-
-    // Œciany boczne (4 œciany, 2 trójk¹ty ka¿da)
-    0, 1, 5,
-    0, 5, 4,
-
-    1, 2, 6,
-    1, 6, 5,
-
-    2, 3, 7,
-    2, 7, 6,
-
-    3, 0, 4,
-    3, 4, 7
+const float base_texc[] = {
+    1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f,
+    0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+    0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+    1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f,
+    0.0f, 0.0f,		0.0f, 1.0f,		1.0f, 0.0f,		1.0f, 1.0f,
+    1.0f, 0.0f,		0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f
 };
 
 const unsigned char top_indices[] = {
@@ -364,6 +356,13 @@ void Engine::initGraphics() {
     }
     else {
         std::cerr << "Nie uda³o siê za³adowaæ tekstury!" << std::endl;
+    }
+    textureID = bitmapHandler.loadTexture("rocket_tex.png");
+    if (textureID != 0) {
+        instance->Rocket_tex = textureID; // Zapisuje id tekstury 
+    }
+    else {
+        std::cerr << "Nie udalo sie zaladowac tekstury!" << std::endl;
     }
 
 
@@ -790,13 +789,14 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
 //rakieta
 instance->cube.resetTransform();
 instance->pyramid.resetTransform();
+instance->cube.TexID[0] = instance->Rocket_tex;
 
 // Ustawienie translacji dla rakiety
 instance->cube.translate(0.0f, rocketY, -5.0f);
 instance->pyramid.translate(0.0f, rocketY, -5.0f); 
 
 // Rysowanie obiektów
-instance->cube.draw(base_vert, base_normals, base_colors, base_indices);
+instance->cube.draw_w_texture(base_vert, base_normals, base_indices, base_texc);
 instance->pyramid.draw(top_vert, top_normals, top_colors, top_indices);
 rocketY += rocketSpeed;
 if (rocketY > 10.0f) { // Gdy rakieta przekroczy pewn¹ wysokoœæ, wraca na dó³
