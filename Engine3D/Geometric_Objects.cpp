@@ -122,7 +122,7 @@ void Geometric_Objects::draw_Torus(double x, double y, double z, double dInnerRa
 {
     glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
     glTranslatef(x, y, z);
-    glColor3f(1.0f, 1.0f, 0.0f);
+    glColor3f(124.0f, 1.0f, 0.0f);
     glutSolidTorus(dInnerRadius, dOuterRadius, nSides, nRings);
     glPopMatrix();
 }
@@ -131,7 +131,7 @@ void Geometric_Objects::draw_Cylinder(double x, double y, double z, double base,
 {
     glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
     glTranslatef(x, y, z);
-    glColor3f(1.0f, 1.0f, 0.0f);
+    glColor3f(240.0f, 50.0f, 0.0f);
     glutSolidCylinder(base,  height,  slices,  stacks);
     glPopMatrix();
 }
@@ -140,7 +140,7 @@ void Geometric_Objects::draw_Cone(double x, double y, double z, double base, dou
 {
     glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
     glTranslatef(x, y, z);
-    glColor3f(1.0f, 1.0f, 0.0f);
+    glColor3f(47, 79, 79);
     glutSolidCone(base, height, slices, stacks);
     glPopMatrix();
 }
@@ -165,6 +165,28 @@ void Geometric_Objects::draw_Box(const float cube_vert[], const float cube_norm[
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
+void Geometric_Objects::draw_sphere_with_texture(double x, double y, double z, double dRadius, GLint slices, GLint stacks, GLuint textureID)
+{
+    glPushMatrix();
+    glTranslatef(x, y, z);
+
+    // Enable texturing and bind the texture
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    // Generate texture coordinates for the sphere
+    GLUquadric* quadric = gluNewQuadric();
+    gluQuadricTexture(quadric, GL_TRUE); // Enable texture generation
+    gluQuadricNormals(quadric, GLU_SMOOTH); // Smooth normals for lighting
+
+    // Draw the sphere
+    gluSphere(quadric, dRadius, slices, stacks);
+
+    // Cleanup
+    gluDeleteQuadric(quadric);
+    glDisable(GL_TEXTURE_2D);
+    glPopMatrix();
+}
 
 
 

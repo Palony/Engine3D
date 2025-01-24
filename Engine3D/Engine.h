@@ -54,12 +54,14 @@ private:
     GLuint textureID;
     GLuint TexID[3];
     GLuint Rocket_tex;
+    GLuint Sphere_tex;
     
 
 
     //enum dla trybów rzutowania
     enum class ProjectionMode { PERSPECTIVE, ORTHOGRAPHIC };
     ProjectionMode currentProjectionMode;
+
 
     static void displayCallback();
     static void reshapeCallback(int width, int height);

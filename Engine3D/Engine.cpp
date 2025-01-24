@@ -367,6 +367,12 @@ void Engine::initGraphics() {
     }
     else {
         std::cerr << "Nie udalo sie zaladowac tekstury!" << std::endl;
+    } GLuint sphereTextureID = bitmapHandler.loadTexture("tex0.png"); 
+    if (sphereTextureID != 0) {
+        instance->Sphere_tex = sphereTextureID; 
+    }
+    else {
+        std::cerr << "Nie udalo sie zaladowac tekstury!" << std::endl;
     }
 
 
@@ -406,7 +412,8 @@ void Engine::displayCallback() {
     if (instance->currentProjectionMode == ProjectionMode::PERSPECTIVE) {
         glTranslatef(0.0f, 0.0f, -5.0f);
     }
-
+   
+    //niepotrzebne
     //// Rysowanie osi wspó³rzêdnych
     //glBegin(GL_LINES);
     //// Oœ X (czerwona)
@@ -425,12 +432,12 @@ void Engine::displayCallback() {
 
 
     //glEnd();
-
+    //niepotrzebne
     //instance->geometric_Objects.draw_rectangle(-1.0f, 1.0f, 0.0f, 
     //    1.0f, 1.0f, 0.0f,   
     //    1.0f, -1.0f, 0.0f,   
     //    -1.0f, -1.0f, 0.0f); 
-
+    //niepotrzebne
     // Wywo³anie funkcji rysuj¹cej kulê
 
 
@@ -440,9 +447,9 @@ void Engine::displayCallback() {
 
     //rysuje szeœcian
     //instance->geometric_Objects.draw_Cube(2);
-
+    //niepotrzebne
     // Wektor Wierzcholkow dla punktów
-    const float PointVerts[] = {
+    /*const float PointVerts[] = {
         0.2f, 0.1f, 0.2f, // Punkt 1
         0.5f, 0.5f, 0.2f, // Punkt 2
        -0.5f, -0.5f, 0.2f // Punkt 3
@@ -457,10 +464,10 @@ void Engine::displayCallback() {
 
     // Wywo³anie metody rysuj¹cej punkty
     //instance->geometric_Objects.draw_points(PointVerts, PointColours, 3); 
-
+    */
     //Rysowanie lini
 
-
+    /*
     //Wektor Wierzcholkow
     const float LineVerts[] = {
         -1.0f,-1.f,0.2f,
@@ -473,30 +480,14 @@ void Engine::displayCallback() {
         1.0f, 1.0f, 0.3f,
         1.0f, 0.9f, 0.0f,
     };
+    */
 
     //instance->geometric_Objects.draw_line(LineVerts, LineColours);
     
-    /*
-    // rysowanie ³amanych
-    // Wektor Wierzcholkow dla linii ³amanej
-    const float PolylineVerts[] = {
-        -1.0f, -1.0f, 0.2f, // Punkt 1
-        -0.5f,  0.5f, 0.2f, // Punkt 2
-         0.0f, -0.5f, 0.2f, // Punkt 3
-         0.5f,  0.5f, 0.2f  // Punkt 4
-    };
-
-    // Wektor kolorow dla linii ³amanej
-    const float PolylineColours[] = {
-        1.0f, 0.0f, 0.0f, // Czerwony dla Punktu 1
-        0.0f, 1.0f, 0.0f, // Zielony dla Punktu 2
-        0.0f, 0.0f, 1.0f, // Niebieski dla Punktu 3
-        1.0f, 1.0f, 0.0f  // ¯ó³ty dla Punktu 4
-    };
-
-    // Wywo³anie rysowania linii ³amanej
-    instance->geometric_Objects.draw_polyline(PolylineVerts, PolylineColours, 4);
-    */
+    
+    // rysowanie ³amanych-- w demie
+    
+    
     //Rysowanie trojkata
 
 
@@ -802,7 +793,7 @@ if (cubeRotationAngle >= 360.0f) {
 
 // Aktualizacja skalowania
 cubeScaleFactor += scaleDirection;
-if (cubeScaleFactor >= 1.2f || cubeScaleFactor <= 0.3f) {
+if (cubeScaleFactor >= 2 || cubeScaleFactor <= 0.5f) {
     scaleDirection = -scaleDirection; // Odwróæ kierunek skalowania
 }
 
@@ -815,10 +806,12 @@ instance->cube.scale(cubeScaleFactor, cubeScaleFactor, cubeScaleFactor); // Skal
 instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind);
 glPopMatrix();
 
+
+
 //kula
 glPushMatrix();
 glColor3f(0.0f, 0.58f, 0.94f); // Kolor kuli (np. niebieski)
-instance->geometric_Objects.draw_sphere(0, -7.5, -5, 5, 18, 18);
+instance->geometric_Objects.draw_sphere_with_texture(0, -7.7, -5, 5, 18, 18, instance->Sphere_tex);
 glPopMatrix();
 
 //torus
@@ -829,9 +822,185 @@ glPopMatrix();
 
 //cone
 glPushMatrix();
-glColor3f(0.0f, 0.58f, 0.94f); // Kolor kuli (np. niebieski)
 instance->geometric_Objects.draw_Cone(5, 25, -9,2, 5, 32,16);
 glPopMatrix();
+
+//cylinder
+glPushMatrix();
+instance->geometric_Objects.draw_Cylinder(-7, 30, -8, 6, 5, 18, 16);
+glPopMatrix();
+
+//rectangle
+      const float LineVerts_rectangle[] = {
+        4.0f, 5.0f, 0.0f,
+        3.0f, 5.0f, 0.0f,
+        3.0f, 4.f, 0.0f,
+        4.0f, 4.f, 0.0f
+    };
+
+    const float LineColours_rectangle[] = {
+        0.2f, 1.0f, 0.3f,
+        1.0f, 0.9f, 0.0f,
+        1.0f, 1.5f, 1.0f,
+        1.0f, 1.0f, 0.5f
+    };
+
+
+
+    instance->geometric_Objects.draw_rectangle(LineVerts_rectangle, LineColours_rectangle);
+
+    //kropeczki !!!ukryjcie sobie to bo du¿o miejsca zajmuje
+    const float PointVerts[] = {
+    44.0f, 16.5f, -34.6f,
+    -25.5f, -4.6f, -13.2f,
+    11.6f, 6.0f, 22.3f,
+    42.2f, -10.3f, 19.4f,
+    35.9f, -26.8f, 15.6f,
+    -15.7f, 23.2f, -29.5f,
+    -31.4f, -39.9f, -42.3f,
+    27.7f, 48.1f, -3.6f,
+    -8.1f, -7.3f, 16.9f,
+    4.6f, -49.5f, 14.2f,
+    18.4f, -8.9f, -24.6f,
+    -48.5f, 12.7f, 36.8f,
+    -22.3f, -35.7f, 43.2f,
+    19.2f, 7.5f, -49.7f,
+    -39.4f, -15.6f, 31.8f,
+    2.3f, 37.5f, 23.4f,
+    9.7f, -19.6f, 27.1f,
+    -17.8f, -28.5f, -7.4f,
+    21.3f, 45.2f, -2.8f,
+    -12.4f, 18.7f, -43.6f,
+    36.2f, 9.3f, -22.5f,
+    -49.7f, 27.4f, 4.9f,
+    24.8f, -40.6f, 32.5f,
+    -8.2f, 10.7f, 12.3f,
+    15.6f, -35.9f, -30.4f,
+    -27.5f, -13.9f, 26.8f,
+    30.9f, 21.2f, 14.3f,
+    -42.8f, 37.1f, -10.6f,
+    17.5f, -45.2f, 48.3f,
+    -7.4f, 25.5f, -22.7f,
+    49.6f, -23.7f, 8.2f,
+    -33.8f, 18.9f, -41.6f,
+    12.4f, 39.8f, -2.1f,
+    -46.1f, -25.7f, 11.7f,
+    41.5f, 15.9f, 43.2f,
+    -10.2f, -20.3f, -19.5f,
+    34.7f, 2.8f, -6.7f,
+    -21.6f, -41.8f, 7.4f,
+    16.9f, -8.5f, 13.7f,
+    -47.5f, 33.6f, -12.4f,
+    8.6f, 42.3f, -5.8f,
+    -6.3f, -31.4f, 40.5f,
+    14.8f, 6.2f, 27.5f,
+    -39.6f, -18.3f, -49.4f,
+    25.4f, -39.7f, -21.9f,
+    -15.3f, 11.7f, 29.6f,
+    20.5f, 48.6f, -37.2f,
+    -44.8f, -14.2f, 45.8f,
+    38.2f, 5.4f, -46.1f
+    };
+    const float PointColours[] = {
+    1.0f, 1.0f, 1.0f,  // Color for point 1
+    1.0f, 1.0f, 1.0f,  // Color for point 2
+    1.0f, 1.0f, 1.0f,  // Color for point 3
+    1.0f, 1.0f, 1.0f,  // Color for point 4
+    1.0f, 1.0f, 1.0f,  // Color for point 5
+    1.0f, 1.0f, 1.0f,  // Color for point 6
+    1.0f, 1.0f, 1.0f,  // Color for point 7
+    1.0f, 1.0f, 1.0f,  // Color for point 8
+    1.0f, 1.0f, 1.0f,  // Color for point 9
+    1.0f, 1.0f, 1.0f,  // Color for point 10
+    1.0f, 1.0f, 1.0f,  // Color for point 11
+    1.0f, 1.0f, 1.0f,  // Color for point 12
+    1.0f, 1.0f, 1.0f,  // Color for point 13
+    1.0f, 1.0f, 1.0f,  // Color for point 14
+    1.0f, 1.0f, 1.0f,  // Color for point 15
+    1.0f, 1.0f, 1.0f,  // Color for point 16
+    1.0f, 1.0f, 1.0f,  // Color for point 17
+    1.0f, 1.0f, 1.0f,  // Color for point 18
+    1.0f, 1.0f, 1.0f,  // Color for point 19
+    1.0f, 1.0f, 1.0f,  // Color for point 20
+    1.0f, 1.0f, 1.0f,  // Color for point 21
+    1.0f, 1.0f, 1.0f,  // Color for point 22
+    1.0f, 1.0f, 1.0f,  // Color for point 23
+    1.0f, 1.0f, 1.0f,  // Color for point 24
+    1.0f, 1.0f, 1.0f,  // Color for point 25
+    1.0f, 1.0f, 1.0f,  // Color for point 26
+    1.0f, 1.0f, 1.0f,  // Color for point 27
+    1.0f, 1.0f, 1.0f,  // Color for point 28
+    1.0f, 1.0f, 1.0f,  // Color for point 29
+    1.0f, 1.0f, 1.0f,  // Color for point 30
+    1.0f, 1.0f, 1.0f,  // Color for point 31
+    1.0f, 1.0f, 1.0f,  // Color for point 32
+    1.0f, 1.0f, 1.0f,  // Color for point 33
+    1.0f, 1.0f, 1.0f,  // Color for point 34
+    1.0f, 1.0f, 1.0f,  // Color for point 35
+    1.0f, 1.0f, 1.0f,  // Color for point 36
+    1.0f, 1.0f, 1.0f,  // Color for point 37
+    1.0f, 1.0f, 1.0f,  // Color for point 38
+    1.0f, 1.0f, 1.0f,  // Color for point 39
+    1.0f, 1.0f, 1.0f,  // Color for point 40
+    1.0f, 1.0f, 1.0f,  // Color for point 41
+    1.0f, 1.0f, 1.0f,  // Color for point 42
+    1.0f, 1.0f, 1.0f,  // Color for point 43
+    1.0f, 1.0f, 1.0f,  // Color for point 44
+    1.0f, 1.0f, 1.0f,  // Color for point 45
+    1.0f, 1.0f, 1.0f,  // Color for point 46
+    1.0f, 1.0f, 1.0f,  // Color for point 47
+    1.0f, 1.0f, 1.0f,  // Color for point 48
+    1.0f, 1.0f, 1.0f,  // Color for point 49
+    1.0f, 1.0f, 1.0f   // Color for point 50
+    };
+       
+     instance->geometric_Objects.draw_points(PointVerts, PointColours, 50); 
+
+     //linie
+     const float LineVerts[] = {
+        -1.0f,-1.f,0.2f,
+        -1.0f,1.0f,0.2f
+     };
+
+
+     //Wektor kolorow
+     const float LineColours[] = {
+         1.0f, 1.0f, 0.3f,
+         1.0f, 0.9f, 0.0f,
+     };
+
+     //instance->geometric_Objects.draw_line(LineVerts, LineColours);
+
+     //³amane linie
+     // Wektor Wierzcholkow dla linii ³amanej
+     const float PolylineVerts[] = {
+        15.0f, 22.0f, -14.8f,  // Punkt 1
+    15.4f, 19.6f, -14.8f,  // Punkt 2
+    16.0f, 19.2f, -14.8f,  // Punkt 3
+    16.1f, 18.6f, -14.8f,  // Punkt 4
+    14.0f, 18.0f, -14.8f,  // Punkt 5
+    14.7f, 16.4f, -14.8f,  // Punkt 6
+    16.6f, 16.6f, -14.8f,  // Punkt 7
+    16.1f, 18.6f, -14.8f
+    
+     };
+
+
+     // Wektor kolorow dla linii ³amanej
+     const float PolylineColours[] = {
+     1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+      1.0f, 1.0f, 1.0f
+     };
+
+     // Wywo³anie rysowania linii ³amanej
+     instance->geometric_Objects.draw_polyline(PolylineVerts, PolylineColours, 8);
+
 
 // Przywracanie domyœlnego koloru i materia³u
 glColor3f(1.0f, 1.0f, 1.0f); // Ustawienie koloru na bia³y (neutralny)
@@ -887,7 +1056,7 @@ void Engine::reshapeCallback(int width, int height) {
     else if (instance->currentProjectionMode == ProjectionMode::ORTHOGRAPHIC) {
         // Ustawienie rzutowania ortograficznego
         float aspect = (float)width / (float)height;
-        glOrtho(-2.0f * aspect, 2.0f * aspect, -2.0f, 2.0f, -200.0f, 200.0f);
+        glOrtho(-30.0f * aspect, 30.0f * aspect, -30.0f, 30.0f, -200.0f, 200.0f);
     }
 
     glMatrixMode(GL_MODELVIEW);

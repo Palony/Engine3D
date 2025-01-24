@@ -18,6 +18,7 @@ public:
 	void draw_Cylinder(double x, double y, double z, double base, double height, GLint slices, GLint stacks); //Rysuje cylinder
 	void draw_Cone(double x, double y, double z, double base, double height, GLint slices, GLint stacks); // Rysuje sto¿ek
 	void draw_Box(const float cube_vert[], const float cube_norm[],const float cube_cols[], const unsigned char cube_ind[]);
+	void draw_sphere_with_texture(double x, double y, double z, double dRadius, GLint slices, GLint stacks, GLuint textureID);
 
 };
 
