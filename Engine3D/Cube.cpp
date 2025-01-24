@@ -10,7 +10,7 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
 {
 
 
-
+    //glColor3f(255,255, 255);
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glMultMatrixf(glm::value_ptr(transformationMatrix));
@@ -32,7 +32,7 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
-
+ 
 
 
    glPopMatrix();
@@ -41,9 +41,11 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
 
 void Cube::draw_w_texture(const float obj_vert[], const float obj_norm[], const unsigned char obj_ind[], const float obj_texc[])
 {
+    
     glEnable(GL_TEXTURE_2D);
 
     glPushMatrix();
+   // glColor3f(255, 255, 255);
     glMultMatrixf(glm::value_ptr(transformationMatrix));
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, obj_vert);
@@ -60,7 +62,6 @@ void Cube::draw_w_texture(const float obj_vert[], const float obj_norm[], const 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
 
 
 

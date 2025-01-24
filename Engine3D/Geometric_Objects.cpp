@@ -103,10 +103,13 @@ void Geometric_Objects::draw_rectangle(const float LineVerts[], const float Line
 
 
 
-void Geometric_Objects::draw_sphere(double dRadius, GLint slices, GLint stacks)
+void Geometric_Objects::draw_sphere(double x, double y, double z, double dRadius, GLint slices, GLint stacks)
 {
-    glColor3f(1.0f, 1.0f, 0.0f);  // Ustawienie koloru kuli na ¿ó³ty
-    glutSolidSphere(dRadius,slices,stacks); // Rysowanie pe³nej kuli 
+    glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
+    glTranslatef(x, y, z);        // Przesuniêcie obiektu na (x, y, z)
+   // glColor3f(0, 150, 240);  // Ustaw kolor kuli (np. ¿ó³ty)
+    glutSolidSphere(dRadius, slices, stacks);
+    glPopMatrix();                // Przywraca poprzedni stan macierzy
 }
 
 void Geometric_Objects::draw_Cube(double dSize)
@@ -115,22 +118,31 @@ void Geometric_Objects::draw_Cube(double dSize)
     glutSolidCube(dSize);
 }
 
-void Geometric_Objects::draw_Torus(double dInnerRadius, double dOuterRadius, GLint nSides, GLint nRings)
+void Geometric_Objects::draw_Torus(double x, double y, double z, double dInnerRadius, double dOuterRadius, GLint nSides, GLint nRings)
 {
+    glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
+    glTranslatef(x, y, z);
     glColor3f(1.0f, 1.0f, 0.0f);
     glutSolidTorus(dInnerRadius, dOuterRadius, nSides, nRings);
+    glPopMatrix();
 }
 
-void Geometric_Objects::draw_Cylinder(double base, double height, GLint slices, GLint stacks)
+void Geometric_Objects::draw_Cylinder(double x, double y, double z, double base, double height, GLint slices, GLint stacks)
 {
+    glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
+    glTranslatef(x, y, z);
     glColor3f(1.0f, 1.0f, 0.0f);
     glutSolidCylinder(base,  height,  slices,  stacks);
+    glPopMatrix();
 }
 
-void Geometric_Objects::draw_Cone(double base, double height, GLint slices, GLint stacks)
+void Geometric_Objects::draw_Cone(double x, double y, double z, double base, double height, GLint slices, GLint stacks)
 {
+    glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
+    glTranslatef(x, y, z);
     glColor3f(1.0f, 1.0f, 0.0f);
     glutSolidCone(base, height, slices, stacks);
+    glPopMatrix();
 }
 
 void Geometric_Objects::draw_Box(const float cube_vert[], const float cube_norm[], const float cube_cols[], const unsigned char cube_ind[])

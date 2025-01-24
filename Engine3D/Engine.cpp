@@ -8,9 +8,13 @@
 
 
 Engine* Engine::instance = nullptr;
+//zmienne globalne dla dema
 float rocketY = 0.0f; // Pozycja pionowa rakiety
-float rocketSpeed = 0.05f; // Prêdkoœæ lotu rakiety
-
+float rocketSpeed = 0.0; // Prêdkoœæ lotu rakiety
+float rotationAngle = 0.0f; // K¹t obrotu wokó³ œrodka rakiety
+float cubeRotationAngle = 0.0f; // K¹t obrotu szeœcianu
+float cubeScaleFactor = 0.5f;   // Wspó³czynnik skalowania szeœcianu
+float scaleDirection = 0.001f;   // Kierunek skalowania (rosn¹cy/malej¹cy)
 Light light;
 //Material material;
 
@@ -608,14 +612,14 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
     };
     //kolory wierzcho³ków
     const float cube_cols[] = {
-        1.0f, 0.0f, 0.0f, 
-        0.0f, 1.0f, 0.0f, 
-        0.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 1.0f, 
-        0.0f, 1.0f, 1.0f,
-        0.5f, 0.0f, 0.5f  
+      0.0f, 1.0f, 0.0f, // Wierzcho³ek 1 - czerwony
+      0.0f, 1.0f, 0.0f, // Wierzcho³ek 2 - czerwony
+      0.0f, 1.0f, 0.0f, // Wierzcho³ek 3 - czerwony
+      0.0f, 1.0f, 0.0f, // Wierzcho³ek 4 - czerwony
+      0.0f, 1.0f, 0.0f, // Wierzcho³ek 5 - czerwony
+      0.0f, 1.0f, 0.0f, // Wierzcho³ek 6 - czerwony
+      0.0f, 1.0f, 0.0f, // Wierzcho³ek 7 - czerwony
+      0.0f, 1.0f, 0.0f  // Wierzcho³ek 8 - czerwony
     };
 
   
@@ -786,21 +790,72 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
   //  material.applyMaterial();
  //demo
 
-//rakieta
+//ruszajacy sie kwadracik
+glPushMatrix();
+instance->cube.resetTransform();
+
+// Aktualizacja k¹ta obrotu
+cubeRotationAngle += 0.5f; // Zwiêksz k¹t obrotu
+if (cubeRotationAngle >= 360.0f) {
+    cubeRotationAngle -= 360.0f;
+}
+
+// Aktualizacja skalowania
+cubeScaleFactor += scaleDirection;
+if (cubeScaleFactor >= 1.2f || cubeScaleFactor <= 0.3f) {
+    scaleDirection = -scaleDirection; // Odwróæ kierunek skalowania
+}
+
+// Zastosowanie transformacji
+instance->cube.translate(0, 5, 0);                      // Przesuniêcie
+instance->cube.rotate(cubeRotationAngle, 1.0f, 1.0f, 0); // Obrót
+instance->cube.scale(cubeScaleFactor, cubeScaleFactor, cubeScaleFactor); // Skalowanie
+
+// Rysowanie szeœcianu
+instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind);
+glPopMatrix();
+
+//kula
+glPushMatrix();
+glColor3f(0.0f, 0.58f, 0.94f); // Kolor kuli (np. niebieski)
+instance->geometric_Objects.draw_sphere(0, -7.5, -5, 5, 18, 18);
+glPopMatrix();
+
+//torus
+glPushMatrix();
+glColor3f(0.0f, 0.58f, 0.94f); // Kolor kuli (np. niebieski)
+instance->geometric_Objects.draw_Torus(-5, 10.5, -9, 1, 3, 32,32);
+glPopMatrix();
+
+//cone
+glPushMatrix();
+glColor3f(0.0f, 0.58f, 0.94f); // Kolor kuli (np. niebieski)
+instance->geometric_Objects.draw_Cone(5, 25, -9,2, 5, 32,16);
+glPopMatrix();
+
+// Przywracanie domyœlnego koloru i materia³u
+glColor3f(1.0f, 1.0f, 1.0f); // Ustawienie koloru na bia³y (neutralny)
+
+
+// Rysowanie rakiety
+glPushMatrix();
 instance->cube.resetTransform();
 instance->pyramid.resetTransform();
 instance->cube.TexID[0] = instance->Rocket_tex;
 
-// Ustawienie translacji dla rakiety
 instance->cube.translate(0.0f, rocketY, -5.0f);
-instance->pyramid.translate(0.0f, rocketY, -5.0f); 
+instance->pyramid.translate(0.0f, rocketY, -5.0f);
+instance->cube.rotate(rocketY, 1, 0, 0);
+instance->pyramid.rotate(rocketY, 1, 0, 0);
 
-// Rysowanie obiektów
 instance->cube.draw_w_texture(base_vert, base_normals, base_indices, base_texc);
 instance->pyramid.draw(top_vert, top_normals, top_colors, top_indices);
+glPopMatrix();
+
 rocketY += rocketSpeed;
-if (rocketY > 10.0f) { // Gdy rakieta przekroczy pewn¹ wysokoœæ, wraca na dó³
-    rocketY = -5.0f;
+if (rocketY > 40.0f) { // Gdy rakieta przekroczy pewn¹ wysokoœæ, wraca na dó³
+    rocketY = 0.0f;
+    rocketSpeed = 0.f;
 }
 //demo_end
 
@@ -956,7 +1011,7 @@ void Engine::keyboardCallback(unsigned char key, int x, int y) {
     case 'r': // Resetuj rakietê
         rocketY = 0.0f;
         break;
-    case '+': // Zwiêksz prêdkoœæ
+    case '=': // Zwiêksz prêdkoœæ
         rocketSpeed += 0.01f;
         break;
     case '-': // Zmniejsz prêdkoœæ
