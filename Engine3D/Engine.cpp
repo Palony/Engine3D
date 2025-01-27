@@ -373,7 +373,7 @@ void Engine::initGraphics() {
     }
     else {
         std::cerr << "Nie udalo sie zaladowac tekstury!" << std::endl;
-    }
+    } 
 
 
 
@@ -779,14 +779,18 @@ instance->cube.scale(0.5, 0.5, 0.5); // Zmniejszenie rozmiaru szeœcianu
 
     // Ustawienie materia³u
   //  material.applyMaterial();
+   
+  
+
+
  //demo
 
-//ruszajacy sie kwadracik
+//transformowany szescian
 glPushMatrix();
 instance->cube.resetTransform();
 
-// Aktualizacja k¹ta obrotu
-cubeRotationAngle += 0.5f; // Zwiêksz k¹t obrotu
+
+cubeRotationAngle += 0.5f; 
 if (cubeRotationAngle >= 360.0f) {
     cubeRotationAngle -= 360.0f;
 }
@@ -798,9 +802,9 @@ if (cubeScaleFactor >= 2 || cubeScaleFactor <= 0.5f) {
 }
 
 // Zastosowanie transformacji
-instance->cube.translate(0, 5, 0);                      // Przesuniêcie
-instance->cube.rotate(cubeRotationAngle, 1.0f, 1.0f, 0); // Obrót
-instance->cube.scale(cubeScaleFactor, cubeScaleFactor, cubeScaleFactor); // Skalowanie
+instance->cube.translate(0, 10, 0);                      
+instance->cube.rotate(cubeRotationAngle, 1.0f, 1.0f, 0); 
+instance->cube.scale(cubeScaleFactor, cubeScaleFactor, cubeScaleFactor); 
 
 // Rysowanie szeœcianu
 instance->cube.draw(cube_vert, cube_norm, cube_cols, cube_ind);
@@ -808,48 +812,65 @@ glPopMatrix();
 
 
 
-//kula
+//kula (glowna planeta)
 glPushMatrix();
-glColor3f(0.0f, 0.58f, 0.94f); // Kolor kuli (np. niebieski)
+glColor3f(0.0f, 0.58f, 0.94f); 
 instance->geometric_Objects.draw_sphere_with_texture(0, -7.7, -5, 5, 18, 18, instance->Sphere_tex);
+glPopMatrix();
+
+
+//planeta1
+glPushMatrix();
+glColor3f(0.4f, 0.98f, 0.314f);
+instance->geometric_Objects.draw_sphere_with_texture(12, -7.7, 102, 3, 14, 14, instance->Sphere_tex);
+//instance->geometric_Objects.draw_sphere(12, -7.7, 102, 3, 14, 14);
+glPopMatrix();
+
+
+//planeta2
+glPushMatrix();
+glColor3f(1.0f, 0.0f, 0.5f);
+//instance->geometric_Objects.draw_sphere(-14, -1.7, -50, 2.5, 18, 18);
+instance->geometric_Objects.draw_sphere_with_texture(-14, -1.7, -50, 2.5, 18, 18, instance->Sphere_tex);
+glPopMatrix();
+
+//planeta3
+glPushMatrix();
+glColor3f(0.75f, 0.58f, 0.14f);
+//instance->geometric_Objects.draw_sphere(5.0f, 14.0f, -20.0f, 2.0f, 18, 18);
+instance->geometric_Objects.draw_sphere_with_texture(5.0f, 14.0f, -20.0f, 2.0f, 18, 18, instance->Sphere_tex);
+glPopMatrix();
+
+//torus (pierscien)
+glPushMatrix();
+glColor3f(1.0f,1.0f, 0.0f);
+instance->geometric_Objects.draw_Torus(5.0, 14.0, -20.0, 0.6, 3.7, 32, 32);
 glPopMatrix();
 
 //torus
 glPushMatrix();
-glColor3f(0.0f, 0.58f, 0.94f); // Kolor kuli (np. niebieski)
-instance->geometric_Objects.draw_Torus(-5, 10.5, -9, 1, 3, 32,32);
+glColor3f(0.4f, 1.0f, 0.2f);
+instance->geometric_Objects.draw_Torus(-5, 15.5, -49, 1, 3, 32,32);
 glPopMatrix();
 
-//cone
+
+
+//stozek
 glPushMatrix();
-instance->geometric_Objects.draw_Cone(5, 25, -9,2, 5, 32,16);
+glColor3f(0.3f, 0.3f, 0.7f);
+instance->geometric_Objects.draw_Cone(1, 17, -9,2, 5, 32,16);
 glPopMatrix();
 
 //cylinder
 glPushMatrix();
-instance->geometric_Objects.draw_Cylinder(-7, 30, -8, 6, 5, 18, 16);
+glColor3f(0.1f, 0.1f, 0.7f);
+instance->geometric_Objects.draw_Cylinder(-17, 25, -28, 4, 4, 18, 16);
 glPopMatrix();
 
-//rectangle
-      const float LineVerts_rectangle[] = {
-        4.0f, 5.0f, 0.0f,
-        3.0f, 5.0f, 0.0f,
-        3.0f, 4.f, 0.0f,
-        4.0f, 4.f, 0.0f
-    };
 
-    const float LineColours_rectangle[] = {
-        0.2f, 1.0f, 0.3f,
-        1.0f, 0.9f, 0.0f,
-        1.0f, 1.5f, 1.0f,
-        1.0f, 1.0f, 0.5f
-    };
+    
 
-
-
-    instance->geometric_Objects.draw_rectangle(LineVerts_rectangle, LineColours_rectangle);
-
-    //kropeczki !!!ukryjcie sobie to bo du¿o miejsca zajmuje
+    //Punkty (gwiazdy)
     const float PointVerts[] = {
     44.0f, 16.5f, -34.6f,
     -25.5f, -4.6f, -13.2f,
@@ -902,85 +923,71 @@ glPopMatrix();
     38.2f, 5.4f, -46.1f
     };
     const float PointColours[] = {
-    1.0f, 1.0f, 1.0f,  // Color for point 1
-    1.0f, 1.0f, 1.0f,  // Color for point 2
-    1.0f, 1.0f, 1.0f,  // Color for point 3
-    1.0f, 1.0f, 1.0f,  // Color for point 4
-    1.0f, 1.0f, 1.0f,  // Color for point 5
-    1.0f, 1.0f, 1.0f,  // Color for point 6
-    1.0f, 1.0f, 1.0f,  // Color for point 7
-    1.0f, 1.0f, 1.0f,  // Color for point 8
-    1.0f, 1.0f, 1.0f,  // Color for point 9
-    1.0f, 1.0f, 1.0f,  // Color for point 10
-    1.0f, 1.0f, 1.0f,  // Color for point 11
-    1.0f, 1.0f, 1.0f,  // Color for point 12
-    1.0f, 1.0f, 1.0f,  // Color for point 13
-    1.0f, 1.0f, 1.0f,  // Color for point 14
-    1.0f, 1.0f, 1.0f,  // Color for point 15
-    1.0f, 1.0f, 1.0f,  // Color for point 16
-    1.0f, 1.0f, 1.0f,  // Color for point 17
-    1.0f, 1.0f, 1.0f,  // Color for point 18
-    1.0f, 1.0f, 1.0f,  // Color for point 19
-    1.0f, 1.0f, 1.0f,  // Color for point 20
-    1.0f, 1.0f, 1.0f,  // Color for point 21
-    1.0f, 1.0f, 1.0f,  // Color for point 22
-    1.0f, 1.0f, 1.0f,  // Color for point 23
-    1.0f, 1.0f, 1.0f,  // Color for point 24
-    1.0f, 1.0f, 1.0f,  // Color for point 25
-    1.0f, 1.0f, 1.0f,  // Color for point 26
-    1.0f, 1.0f, 1.0f,  // Color for point 27
-    1.0f, 1.0f, 1.0f,  // Color for point 28
-    1.0f, 1.0f, 1.0f,  // Color for point 29
-    1.0f, 1.0f, 1.0f,  // Color for point 30
-    1.0f, 1.0f, 1.0f,  // Color for point 31
-    1.0f, 1.0f, 1.0f,  // Color for point 32
-    1.0f, 1.0f, 1.0f,  // Color for point 33
-    1.0f, 1.0f, 1.0f,  // Color for point 34
-    1.0f, 1.0f, 1.0f,  // Color for point 35
-    1.0f, 1.0f, 1.0f,  // Color for point 36
-    1.0f, 1.0f, 1.0f,  // Color for point 37
-    1.0f, 1.0f, 1.0f,  // Color for point 38
-    1.0f, 1.0f, 1.0f,  // Color for point 39
-    1.0f, 1.0f, 1.0f,  // Color for point 40
-    1.0f, 1.0f, 1.0f,  // Color for point 41
-    1.0f, 1.0f, 1.0f,  // Color for point 42
-    1.0f, 1.0f, 1.0f,  // Color for point 43
-    1.0f, 1.0f, 1.0f,  // Color for point 44
-    1.0f, 1.0f, 1.0f,  // Color for point 45
-    1.0f, 1.0f, 1.0f,  // Color for point 46
-    1.0f, 1.0f, 1.0f,  // Color for point 47
-    1.0f, 1.0f, 1.0f,  // Color for point 48
-    1.0f, 1.0f, 1.0f,  // Color for point 49
-    1.0f, 1.0f, 1.0f   // Color for point 50
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f,
+1.0f, 1.0f, 1.0f
     };
        
      instance->geometric_Objects.draw_points(PointVerts, PointColours, 50); 
 
-     //linie
-     const float LineVerts[] = {
-        -1.0f,-1.f,0.2f,
-        -1.0f,1.0f,0.2f
-     };
-
-
-     //Wektor kolorow
-     const float LineColours[] = {
-         1.0f, 1.0f, 0.3f,
-         1.0f, 0.9f, 0.0f,
-     };
-
-     //instance->geometric_Objects.draw_line(LineVerts, LineColours);
-
-     //³amane linie
+   
+     //³amane linie (gwiazdozbior)
      // Wektor Wierzcholkow dla linii ³amanej
      const float PolylineVerts[] = {
-        15.0f, 22.0f, -14.8f,  // Punkt 1
-    15.4f, 19.6f, -14.8f,  // Punkt 2
-    16.0f, 19.2f, -14.8f,  // Punkt 3
-    16.1f, 18.6f, -14.8f,  // Punkt 4
-    14.0f, 18.0f, -14.8f,  // Punkt 5
-    14.7f, 16.4f, -14.8f,  // Punkt 6
-    16.6f, 16.6f, -14.8f,  // Punkt 7
+        15.0f, 22.0f, -14.8f,  
+    15.4f, 19.6f, -14.8f,  
+    16.0f, 19.2f, -14.8f, 
+    16.1f, 18.6f, -14.8f,  
+    14.0f, 18.0f, -14.8f,  
+    14.7f, 16.4f, -14.8f,  
+    16.6f, 16.6f, -14.8f,  
     16.1f, 18.6f, -14.8f
     
      };
@@ -998,13 +1005,12 @@ glPopMatrix();
       1.0f, 1.0f, 1.0f
      };
 
-     // Wywo³anie rysowania linii ³amanej
+     
      instance->geometric_Objects.draw_polyline(PolylineVerts, PolylineColours, 8);
 
 
-// Przywracanie domyœlnego koloru i materia³u
-glColor3f(1.0f, 1.0f, 1.0f); // Ustawienie koloru na bia³y (neutralny)
-
+// Przywracanie domyœlnego koloru
+glColor3f(1.0f, 1.0f, 1.0f); 
 
 // Rysowanie rakiety
 glPushMatrix();
@@ -1022,7 +1028,7 @@ instance->pyramid.draw(top_vert, top_normals, top_colors, top_indices);
 glPopMatrix();
 
 rocketY += rocketSpeed;
-if (rocketY > 40.0f) { // Gdy rakieta przekroczy pewn¹ wysokoœæ, wraca na dó³
+if (rocketY > 40.0f) { 
     rocketY = 0.0f;
     rocketSpeed = 0.f;
 }
@@ -1065,7 +1071,7 @@ void Engine::reshapeCallback(int width, int height) {
 
 //funkcja do prze³¹czania trybów rzutowania
 void Engine::keyboardCallback(unsigned char key, int x, int y) {
-    const float cameraSpeed = 0.1f;     // Prêdkoœæ ruchu kamery
+    const float cameraSpeed = 0.2f;     // Prêdkoœæ ruchu kamery
     const float rotationAngle = 5.0f;  // K¹t obrotu w stopniach
 
     // Konwersja z const float* na glm::vec3

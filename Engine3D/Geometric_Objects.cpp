@@ -105,11 +105,11 @@ void Geometric_Objects::draw_rectangle(const float LineVerts[], const float Line
 
 void Geometric_Objects::draw_sphere(double x, double y, double z, double dRadius, GLint slices, GLint stacks)
 {
-    glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
-    glTranslatef(x, y, z);        // Przesuniêcie obiektu na (x, y, z)
-   // glColor3f(0, 150, 240);  // Ustaw kolor kuli (np. ¿ó³ty)
+    glPushMatrix();               
+    glTranslatef(x, y, z);       
+   
     glutSolidSphere(dRadius, slices, stacks);
-    glPopMatrix();                // Przywraca poprzedni stan macierzy
+    glPopMatrix();                
 }
 
 void Geometric_Objects::draw_Cube(double dSize)
@@ -120,27 +120,27 @@ void Geometric_Objects::draw_Cube(double dSize)
 
 void Geometric_Objects::draw_Torus(double x, double y, double z, double dInnerRadius, double dOuterRadius, GLint nSides, GLint nRings)
 {
-    glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
+    glPushMatrix();               
     glTranslatef(x, y, z);
-    glColor3f(124.0f, 1.0f, 0.0f);
+    
     glutSolidTorus(dInnerRadius, dOuterRadius, nSides, nRings);
     glPopMatrix();
 }
 
 void Geometric_Objects::draw_Cylinder(double x, double y, double z, double base, double height, GLint slices, GLint stacks)
 {
-    glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
+    glPushMatrix();               
     glTranslatef(x, y, z);
-    glColor3f(240.0f, 50.0f, 0.0f);
+   
     glutSolidCylinder(base,  height,  slices,  stacks);
     glPopMatrix();
 }
 
 void Geometric_Objects::draw_Cone(double x, double y, double z, double base, double height, GLint slices, GLint stacks)
 {
-    glPushMatrix();               // Zapisuje bie¿¹c¹ macierz
+    glPushMatrix();               
     glTranslatef(x, y, z);
-    glColor3f(47, 79, 79);
+  
     glutSolidCone(base, height, slices, stacks);
     glPopMatrix();
 }

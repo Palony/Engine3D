@@ -10,7 +10,7 @@ void Cube::draw(const float cube_vert[], const float cube_norm[], const float cu
 {
 
 
-    //glColor3f(255,255, 255);
+    
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glMultMatrixf(glm::value_ptr(transformationMatrix));
@@ -45,7 +45,7 @@ void Cube::draw_w_texture(const float obj_vert[], const float obj_norm[], const 
     glEnable(GL_TEXTURE_2D);
 
     glPushMatrix();
-   // glColor3f(255, 255, 255);
+ 
     glMultMatrixf(glm::value_ptr(transformationMatrix));
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, obj_vert);

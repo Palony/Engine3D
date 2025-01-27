@@ -8,7 +8,7 @@ Pyramid::Pyramid()
 void Pyramid::draw(const float pryamid_vert[], const float pryamid_norm[], const float pyramid_cols[], const unsigned char pyramid_ind[])
 {
     glMatrixMode(GL_MODELVIEW);
-  //  glPushMatrix();
+ 
     glMultMatrixf(glm::value_ptr(transformationMatrix));
 
 
@@ -29,7 +29,7 @@ void Pyramid::draw(const float pryamid_vert[], const float pryamid_norm[], const
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 
-   // glPopMatrix();
+  
 }
 
 void Pyramid::translate(float tx, float ty, float tz)
