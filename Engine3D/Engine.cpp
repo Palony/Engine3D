@@ -3,7 +3,7 @@
 #include "Camera.h"
 #include "Cube.h"
 #include "Lighting.h"
-//#include "Material.h"
+
 #include "BitmapHandler.h"
 
 
@@ -12,11 +12,11 @@ Engine* Engine::instance = nullptr;
 float rocketY = 0.0f; // Pozycja pionowa rakiety
 float rocketSpeed = 0.0; // Prêdkoœæ lotu rakiety
 float rotationAngle = 0.0f; // K¹t obrotu wokó³ œrodka rakiety
-float cubeRotationAngle = 0.0f; // K¹t obrotu szeœcianu
-float cubeScaleFactor = 0.5f;   // Wspó³czynnik skalowania szeœcianu
+float cubeRotationAngle = 4.0f; // K¹t obrotu szeœcianu
+float cubeScaleFactor = 1.0f;   // Wspó³czynnik skalowania szeœcianu
 float scaleDirection = 0.001f;   // Kierunek skalowania (rosn¹cy/malej¹cy)
 Light light;
-//Material material;
+
 
 const float base_vert[] = {
 -1.0f, -3.0f,  1.0f,   1.0f, -3.0f,  1.0f,  -1.0f,  1.0f,  1.0f,   1.0f,  1.0f,  1.0f,

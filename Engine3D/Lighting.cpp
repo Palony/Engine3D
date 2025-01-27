@@ -2,10 +2,10 @@
 
 Light::Light() {
     // Domyœlna pozycja œwiat³a
-    position[0] = 0.2f; position[1] = 0.5f; position[2] = 1.2f; position[3] = 1.0f;
+    position[0] = 0.0f; position[1] = -0.5; position[2] = -5.0f; position[3] = 1.0f;
 
     // Domyœlne t³umienie
-    attenuation[0] = 1.0f; // Sta³e
+    attenuation[0] = 0.2f; // Sta³e
     attenuation[1] = 0.1f; // Liniowe
     attenuation[2] = 0.01f; // Kwadratowe
 
